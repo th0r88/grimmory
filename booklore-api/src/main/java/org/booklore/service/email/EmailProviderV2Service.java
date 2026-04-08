@@ -33,11 +33,8 @@ public class EmailProviderV2Service {
 
     public List<EmailProviderV2> getEmailProviders() {
         BookLoreUser user = authService.getAuthenticatedUser();
-        List<EmailProviderV2Entity> userProviders = repository.findAllByUserId(user.getId());
-        if (!user.getPermissions().isAdmin()) {
-            List<EmailProviderV2Entity> sharedProviders = repository.findAllBySharedTrueAndAdmin();
-            userProviders.addAll(sharedProviders);
-        }
+        List<EmailProviderV2Entity> userProviders = new java.util.ArrayList<>(repository.findAllByUserId(user.getId()));
+        userProviders.addAll(repository.findAllSharedByOtherAdmins(user.getId()));
 
         Long defaultProviderId = getDefaultProviderIdForUser(user.getId());
         return userProviders.stream()
@@ -142,8 +139,8 @@ public class EmailProviderV2Service {
     }
 
     private List<EmailProviderV2Entity> getAccessibleProvidersForUser(Long userId) {
-        List<EmailProviderV2Entity> providers = repository.findAllByUserId(userId);
-        providers.addAll(repository.findAllBySharedTrueAndAdmin());
+        List<EmailProviderV2Entity> providers = new java.util.ArrayList<>(repository.findAllByUserId(userId));
+        providers.addAll(repository.findAllSharedByOtherAdmins(userId));
         return providers;
     }
 }

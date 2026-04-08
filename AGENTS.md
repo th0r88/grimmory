@@ -1,4 +1,8 @@
-# Repository Guidelines
+# CLAUDE.md
+
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+Grimmory is a self-hosted book library manager (Angular 21 + Spring Boot 4 / Java 25 + MariaDB). Community fork of Booklore.
 
 ## Agent Workflow
 
@@ -9,16 +13,35 @@
 - First prove the change with targeted tests around the edited surface, then run the wider suite for that surface before handing off.
 - If you cannot run the wider suite, say exactly what you ran, what you skipped, and why.
 
+## Tech Stack
+
+- **Backend:** Java 25 (virtual threads enabled), Spring Boot 4.0, Gradle, MariaDB, Flyway, Hibernate 7, Lombok, MapStruct, JJWT
+- **Frontend:** Angular 21, TypeScript 5.9, PrimeNG 21, TanStack Query, Transloco (i18n), Vitest (unit), Playwright (e2e), Yarn 4 via corepack
+- **Infra:** Docker Compose for dev stack, port 6060
+
 ## Project Structure
 
 - **Backend (`booklore-api/`)**
-  - Application code: `src/main/java`
-  - Resources and Flyway migrations: `src/main/resources`
+  - Application code: `src/main/java/org/booklore/`
+  - Key packages: `app/{controller,service,dto,mapper,specification}`, `config/security/`, `repository/`, `util/`
+  - Resources and Flyway migrations: `src/main/resources` (migrations in `db/migration/`)
   - Tests: `src/test/java`
 - **Frontend (`frontend/`)**
   - Application code: `src/app/{core,features,shared}`
+  - Feature modules: `features/{author-browser,book,bookdrop,dashboard,library-creator,magic-shelf,metadata,notebook,readers,series-browser,settings,stats}`
   - Translations: `src/i18n/`
-  - Assets: `src/assets/`
+  - Environment config: `src/environments/` (API base URL `http://localhost:6060`, WebSocket `ws://localhost:6060/ws`)
+
+## Architecture
+
+The backend is a monolithic Spring Boot app serving both the REST API and the Angular SPA (bundled into the jar). In development, the Angular dev server runs separately and talks to the backend at `localhost:6060`.
+
+- **Controllers** expose REST endpoints under `/api/v1/`. WebSocket broker at `/ws`.
+- **Services** contain business logic; **repositories** are Spring Data JPA interfaces.
+- **DTOs** are mapped to/from JPA entities via MapStruct mappers (in `app/mapper/`).
+- **Security** supports local auth (JWT via JJWT) and OIDC (`config/security/oidc/`).
+- **File handling** supports LOCAL and NETWORK disk types. Book files live under `/books`, imports via `/bookdrop`.
+- **Frontend** uses standalone Angular components, `inject()` for DI, TanStack Query for server state, PrimeNG for UI, and Transloco for i18n.
 
 ## Ownership Boundaries
 
@@ -28,15 +51,32 @@
 
 ## Command Surface
 
-Use these first:
-
 ```bash
-just check          # run backend + frontend verification
-just test           # run backend + frontend tests
-just api run        # start Spring Boot with the dev profile
-just api test       # run backend tests
-just ui dev         # start the Angular dev server
-just ui check       # run frontend verification
+# Full repo
+just check                          # backend + frontend verification
+just test                           # backend + frontend tests
+just dev-up                         # start full Docker dev stack (foreground)
+just db-up                          # start only the dev database
+just db-down                        # stop the dev database
+
+# Backend
+just api run                        # start Spring Boot with dev profile
+just api test                       # run all backend tests
+just api test-class MyTestClass     # run a single test class by name
+just api check                      # full Gradle check
+just api coverage                   # JaCoCo coverage report
+just api build                      # build jar
+
+# Frontend
+just ui dev                         # start Angular dev server
+just ui test                        # run Vitest tests
+just ui lint                        # ESLint
+just ui typecheck                   # TypeScript type checking
+just ui check                       # full verification (deps, typecheck, lint, stylelint, build, test)
+just ui e2e                         # Playwright e2e suite
+just ui e2e-file <spec>             # run single Playwright spec file
+just ui build                       # production build
+just ui install                     # install dependencies
 ```
 
 ## Backend Rules

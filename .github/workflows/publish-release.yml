@@ -75,19 +75,19 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            grimmory/grimmory:${{ env.release_tag }}
-            grimmory/grimmory:latest
-            ghcr.io/grimmory-tools/grimmory:${{ env.release_tag }}
-            ghcr.io/grimmory-tools/grimmory:latest
+            jferme/grimmory:${{ env.release_tag }}
+            jferme/grimmory:latest
+            ghcr.io/th0r88/grimmory:${{ env.release_tag }}
+            ghcr.io/th0r88/grimmory:latest
           build-args: |
             APP_VERSION=${{ env.release_tag }}
             APP_REVISION=${{ env.commit_sha }}
           cache-from: |
             type=gha,scope=image-shared
-            type=registry,ref=ghcr.io/grimmory-tools/grimmory:buildcache
+            type=registry,ref=ghcr.io/th0r88/grimmory:buildcache
           cache-to: |
             type=gha,scope=image-shared,mode=max
-            type=registry,ref=ghcr.io/grimmory-tools/grimmory:buildcache,mode=max
+            type=registry,ref=ghcr.io/th0r88/grimmory:buildcache,mode=max
 
       - name: Publish Draft GitHub Release
         env:
