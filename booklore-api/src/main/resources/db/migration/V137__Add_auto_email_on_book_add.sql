@@ -13,5 +13,5 @@ CREATE TABLE book_email_status
     created_at    TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP,
     UNIQUE KEY uk_book_email_status_book_user (book_id, user_id),
     CONSTRAINT fk_book_email_status_book FOREIGN KEY (book_id) REFERENCES book (id) ON DELETE CASCADE,
-    CONSTRAINT fk_book_email_status_user FOREIGN KEY (user_id) REFERENCES book_lore_user (id) ON DELETE CASCADE
+    CONSTRAINT fk_book_email_status_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
