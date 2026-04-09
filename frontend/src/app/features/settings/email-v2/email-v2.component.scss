@@ -17,6 +17,10 @@
   @include settings.settings-page-description;
 }
 
+.setting-warning {
+  @include settings.settings-warning-notice;
+}
+
 .access-denied-card {
   display: flex;
   align-items: center;

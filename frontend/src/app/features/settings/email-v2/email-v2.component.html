@@ -19,6 +19,7 @@
               <span class="setting-label">{{ t('autoEmail.label') }}</span>
               <p-toggleswitch
                 [ngModel]="autoEmailOnBookAdd()"
+                [disabled]="!hasRecipient()"
                 (onChange)="onAutoEmailToggle($event.checked)">
               </p-toggleswitch>
             </div>
@@ -26,6 +27,12 @@
               <i class="pi pi-info-circle"></i>
               {{ t('autoEmail.description') }}
             </p>
+            @if (!hasRecipient()) {
+              <p class="setting-warning">
+                <i class="pi pi-exclamation-triangle"></i>
+                {{ t('autoEmail.noRecipientWarning') }}
+              </p>
+            }
           </div>
         </div>
       </div>

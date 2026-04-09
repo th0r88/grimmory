@@ -6,7 +6,8 @@
   "contactAdmin": "Obratite se administratoru za dozvolu.",
   "autoEmail": {
     "label": "Auto-Email on Book Add",
-    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider.",
+    "noRecipientWarning": "You must add at least one email recipient before enabling auto-email."
   },
   "provider": {
     "title": "Pružatelji e-pošte",

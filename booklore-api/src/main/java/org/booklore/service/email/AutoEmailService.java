@@ -133,8 +133,14 @@ public class AutoEmailService {
 
         Optional<EmailRecipientV2Entity> recipient = emailRecipientRepository.findDefaultEmailRecipientByUserId(userId);
         if (recipient.isEmpty()) {
-            log.debug("User {} has no default email recipient, skipping auto-email for book {}", userId, book.getId());
-            return;
+            List<EmailRecipientV2Entity> allRecipients = emailRecipientRepository.findAllByUserId(userId);
+            if (allRecipients.size() == 1) {
+                recipient = Optional.of(allRecipients.getFirst());
+                log.debug("User {} has no default recipient, falling back to sole recipient", userId);
+            } else {
+                log.debug("User {} has no default email recipient and {} total recipients, skipping auto-email for book {}", userId, allRecipients.size(), book.getId());
+                return;
+            }
         }
 
         String recipientEmail = recipient.get().getEmail();
