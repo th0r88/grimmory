@@ -4,6 +4,10 @@
   "accessRestricted": "Toegang beperkt",
   "accessDenied": "",
   "contactAdmin": "Neem contact op met uw beheerder om toestemming aan te vragen.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "",
     "description": "",

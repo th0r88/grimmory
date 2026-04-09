@@ -36,6 +36,11 @@
     "invalidInput": "Nevažeći unos",
     "invalidInputDetail": "Unesite valjanu maksimalnu veličinu učitavanja datoteke u MB."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Postavke spremljene",
   "settingsSavedDetail": "Postavke su uspješno spremljene!",
   "settingsError": "Došlo je do pogreške prilikom spremanja postavki."

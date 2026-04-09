@@ -106,6 +106,8 @@
     "toast": {
       "quickSendSuccessDetail": "本の送信がスケジュールされました。",
       "quickSendErrorDetail": "本の送信中にエラーが発生しました。",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "追加ファイル「{{ fileName }}」が正常に削除されました",
       "deleteFileErrorDetail": "追加ファイルの削除に失敗しました: {{ error }}",
       "readStatusUpdatedSummary": "読書状態を更新しました",
@@ -125,6 +127,8 @@
       "customCoverSuccessDetail": "カバーが正常に生成されました",
       "customCoverFailedDetail": "カバーの生成に失敗しました"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "{{ title }}のカバー",
       "titleTooltip": "タイトル: {{ title }}",

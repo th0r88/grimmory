@@ -15,6 +15,7 @@ import {CoverPlaceholderComponent} from '../../../../../shared/components/cover-
 import {NgClass} from '@angular/common';
 import {User, UserService} from '../../../../settings/user-management/user.service';
 import {EmailService} from '../../../../settings/email-v2/email.service';
+import {EmailStatusService} from '../../../../settings/email-v2/email-status.service';
 import {TieredMenu} from 'primeng/tieredmenu';
 import {Router} from '@angular/router';
 import {RouterLink} from '@angular/router';
@@ -67,6 +68,7 @@ export class BookCardComponent implements OnInit, OnChanges {
   private taskHelperService = inject(TaskHelperService);
   private userService = inject(UserService);
   private emailService = inject(EmailService);
+  private emailStatusService = inject(EmailStatusService);
   private messageService = inject(MessageService);
   private router = inject(Router);
   protected urlHelper = inject(UrlHelperService);
@@ -101,6 +103,8 @@ export class BookCardComponent implements OnInit, OnChanges {
   private user: User | null = null;
   private diskType: string = 'LOCAL';
   private menuInitialized = false;
+  protected emailSendFailed = false;
+  private emailStatusChecked = false;
 
   ngOnInit(): void {
     this.computeAllMemoizedValues();
@@ -115,6 +119,7 @@ export class BookCardComponent implements OnInit, OnChanges {
       this.diskType = settings.diskType ?? 'LOCAL';
     }
 
+    this.checkEmailStatus();
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -919,5 +924,40 @@ export class BookCardComponent implements OnInit, OnChanges {
 
   toggleSelection(event: CheckboxChangeEvent): void {
     this.toggleCardSelection(event.checked);
+  }
+
+  private checkEmailStatus(): void {
+    if (this.emailStatusChecked || !this.book?.id) {
+      return;
+    }
+    this.emailStatusChecked = true;
+    this.emailStatusService.getFailedStatuses([this.book.id]).subscribe({
+      next: (statuses) => {
+        this.emailSendFailed = !!statuses[this.book.id];
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  retryAutoEmail(event: Event): void {
+    event.stopPropagation();
+    this.emailStatusService.retryAutoEmail(this.book.id).subscribe({
+      next: () => {
+        this.emailSendFailed = false;
+        this.cdr.markForCheck();
+        this.messageService.add({
+          severity: 'info',
+          summary: this.t.translate('common.success'),
+          detail: this.t.translate('book.card.toast.autoEmailRetrySuccess'),
+        });
+      },
+      error: () => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.t.translate('common.error'),
+          detail: this.t.translate('book.card.toast.autoEmailRetryError'),
+        });
+      }
+    });
   }
 }

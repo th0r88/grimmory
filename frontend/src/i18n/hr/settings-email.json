@@ -4,6 +4,10 @@
   "accessRestricted": "Pristup ograničen",
   "accessDenied": "Pristup konfiguraciji e-pošte je ograničen.",
   "contactAdmin": "Obratite se administratoru za dozvolu.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "Pružatelji e-pošte",
     "description": "Konfigurirajte usluge slanja e-pošte poput Gmaila, Outlooka ili prilagođenih SMTP poslužitelja. Zadani pružatelj koristi se za 'Brzo slanje knjige' u izborniku kartice knjige.",

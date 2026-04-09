@@ -4,6 +4,10 @@
   "accessRestricted": "访问受限",
   "accessDenied": "邮件配置访问受限。",
   "contactAdmin": "请联系您的管理员申请权限。",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "邮件提供商",
     "description": "配置邮件发送服务，如 Gmail、Outlook 或自定义 SMTP 服务器。默认提供商用于图书卡片菜单中的「快速发送图书」。",

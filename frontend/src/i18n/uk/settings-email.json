@@ -4,6 +4,10 @@
   "accessRestricted": "Доступ обмежено",
   "accessDenied": "Доступ до налаштувань електронної пошти обмежено.",
   "contactAdmin": "Зверніться до адміністратора, щоб запросити дозвіл.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "Поштові провайдери",
     "description": "Налаштуйте сервіси надсилання пошти, як-от Gmail, Outlook або власні SMTP-сервери. Провайдер за замовчуванням використовується для \"Швидкого надсилання книги\" у меню картки книги.",

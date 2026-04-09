@@ -25,6 +25,7 @@ function createUserSettings(): UserSettings {
     entityViewPreferences: {global: {sortKey: 'title', sortDir: 'ASC', view: 'GRID', coverSize: 100, seriesCollapsed: false, overlayBookType: false}, overrides: []},
     koReaderEnabled: false,
     autoSaveMetadata: true,
+    autoEmailOnBookAdd: false,
   } as UserSettings;
 }
 

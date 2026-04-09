@@ -36,6 +36,11 @@
     "invalidInput": "Ungültige Eingabe",
     "invalidInputDetail": "Bitte geben Sie eine gültige maximale Dateiupload-Größe in MB ein."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Einstellungen gespeichert",
   "settingsSavedDetail": "Die Einstellungen wurden erfolgreich gespeichert!",
   "settingsError": "Beim Speichern der Einstellungen ist ein Fehler aufgetreten."

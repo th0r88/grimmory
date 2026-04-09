@@ -34,6 +34,11 @@
     "invalidInput": "Entrada Inválida",
     "invalidInputDetail": "Digite um tamanho máximo de upload de arquivo válido em MB."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Configurações Salvas",
   "settingsSavedDetail": "As configurações foram salvas com sucesso!",
   "settingsError": "Houve um erro ao salvar as configurações."

@@ -61,6 +61,7 @@ function buildUserSettings(overrides: Partial<UserSettings> = {}): UserSettings 
     },
     koReaderEnabled: false,
     autoSaveMetadata: true,
+    autoEmailOnBookAdd: false,
     ...overrides,
   } as UserSettings;
 }

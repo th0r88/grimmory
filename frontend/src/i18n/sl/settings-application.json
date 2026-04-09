@@ -36,6 +36,11 @@
     "invalidInput": "Neveljaven vnos",
     "invalidInputDetail": "Prosim, vnesi veljavno največjo velikost datoteke v MB."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Nastavitve shranjene",
   "settingsSavedDetail": "Nastavitve so bile uspešno shranjene!",
   "settingsError": "Pri shranjevanju nastavitev je prišlo do napake."

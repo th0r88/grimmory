@@ -109,6 +109,8 @@
     "toast": {
       "quickSendSuccessDetail": "Bokskickandet har schemalagts.",
       "quickSendErrorDetail": "Ett fel uppstod vid skickande av boken.",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "Extra fil \"{{ fileName }}\" raderades",
       "deleteFileErrorDetail": "Kunde inte radera extra fil: {{ error }}",
       "readStatusUpdatedSummary": "Lässtatus uppdaterad",
@@ -128,6 +130,8 @@
       "customCoverSuccessDetail": "Omslag genererades",
       "customCoverFailedDetail": "Kunde inte generera omslag"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "Omslag för {{ title }}",
       "titleTooltip": "Titel: {{ title }}",

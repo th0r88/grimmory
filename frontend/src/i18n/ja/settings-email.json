@@ -4,6 +4,10 @@
   "accessRestricted": "アクセス制限",
   "accessDenied": "メール設定へのアクセスが制限されています。",
   "contactAdmin": "管理者にアクセス権限のリクエストをお問い合わせください。",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "メールプロバイダー",
     "description": "Gmail、Outlook、カスタムSMTPサーバーなどのメール送信サービスを設定します。デフォルトプロバイダーはブックカードメニューの「クイック送信」に使用されます。",

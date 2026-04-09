@@ -24,7 +24,8 @@ public enum UserSettingKey {
     HARDCOVER_SYNC_ENABLED("hardcoverSyncEnabled", false),
     AUTO_SAVE_METADATA("autoSaveMetadata", false),
     VISIBLE_FILTERS("visibleFilters", true),
-    VISIBLE_SORT_FIELDS("visibleSortFields", true);
+    VISIBLE_SORT_FIELDS("visibleSortFields", true),
+    AUTO_EMAIL_ON_BOOK_ADD("autoEmailOnBookAdd", false);
 
 
     private final String dbKey;

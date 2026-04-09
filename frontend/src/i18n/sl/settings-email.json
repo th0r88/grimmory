@@ -4,6 +4,10 @@
   "title": "Nastavitve e-pošte",
   "description": "Nastavi e-poštne nastavitve za pošiljanje knjig neposredno na svoje naprave ali prejemnikom. Nastavi ponudnike e-pošte (kot so Gmail, Outlook ali lastni SMTP strežniki) in upravljaj e-poštne naslove prejemnikov.",
   "accessDenied": "Dostop do konfiguracije e-pošte je omejen.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "Ponudniki e-pošte",
     "description": "Konfiguriraj storitve za pošiljanje e-pošte, kot so Gmail, Outlook ali lastni SMTP strežniki. Privzeti ponudnik se uporablja za 'Hitro pošiljanje knjige' v meniju kartice knjige.",

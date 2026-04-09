@@ -109,6 +109,8 @@
     "toast": {
       "quickSendSuccessDetail": "Pošiljanje knjige je bilo načrtovano.",
       "quickSendErrorDetail": "Prišlo je do napake pri pošiljanju knjige.",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "Dodatna datoteka \"{{ fileName }}\" je bila uspešno izbrisana",
       "deleteFileErrorDetail": "Napaka pri brisanju dodatne datoteke: {{ error }}",
       "readStatusUpdatedSummary": "Status branja posodobljen",
@@ -128,6 +130,8 @@
       "customCoverSuccessDetail": "Naslovnica je bila uspešno ustvarjena",
       "customCoverFailedDetail": "Napaka pri ustvarjanju naslovnice"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "Naslovnica za {{ title }}",
       "titleTooltip": "Naslov: {{ title }}",

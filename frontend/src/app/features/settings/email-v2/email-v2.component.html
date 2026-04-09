@@ -12,6 +12,24 @@
     </div>
 
     @if (hasPermission()) {
+      <div class="auto-email-section">
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label-row">
+              <span class="setting-label">{{ t('autoEmail.label') }}</span>
+              <p-toggleswitch
+                [ngModel]="autoEmailOnBookAdd()"
+                (onChange)="onAutoEmailToggle($event.checked)">
+              </p-toggleswitch>
+            </div>
+            <p class="setting-description">
+              <i class="pi pi-info-circle"></i>
+              {{ t('autoEmail.description') }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="section-divider"><hr></div>
       <app-email-v2-provider></app-email-v2-provider>
       <div class="section-divider"><hr></div>
       <app-email-v2-recipient></app-email-v2-recipient>

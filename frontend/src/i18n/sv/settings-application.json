@@ -36,6 +36,11 @@
     "invalidInput": "Ogiltig inmatning",
     "invalidInputDetail": "Ange en giltig max filuppladdningsstorlek i MB."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Inställningar sparade",
   "settingsSavedDetail": "Inställningarna sparades!",
   "settingsError": "Det uppstod ett fel vid sparning av inställningarna."

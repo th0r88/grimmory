@@ -109,6 +109,8 @@
     "toast": {
       "quickSendSuccessDetail": "Книгу додано в чергу на відправку.",
       "quickSendErrorDetail": "Під час надсилання книги сталася помилка.",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "Додатковий файл \"{{ fileName }}\" успішно видалено",
       "deleteFileErrorDetail": "Не вдалося видалити додатковий файл: {{ error }}",
       "readStatusUpdatedSummary": "Статус читання оновлено",
@@ -128,6 +130,8 @@
       "customCoverSuccessDetail": "Обкладинку успішно згенеровано",
       "customCoverFailedDetail": "Не вдалося згенерувати обкладинку"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "Обкладинка {{ title }}",
       "titleTooltip": "Назва: {{ title }}",

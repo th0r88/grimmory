@@ -106,6 +106,8 @@
     "toast": {
       "quickSendSuccessDetail": "Отправка книги запланирована.",
       "quickSendErrorDetail": "Произошла ошибка при отправке книги.",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "Дополнительный файл «{{ fileName }}» успешно удалён",
       "deleteFileErrorDetail": "Не удалось удалить дополнительный файл: {{ error }}",
       "readStatusUpdatedSummary": "Статус чтения обновлён",
@@ -125,6 +127,8 @@
       "customCoverSuccessDetail": "Обложка успешно сгенерирована",
       "customCoverFailedDetail": "Не удалось сгенерировать обложку"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "Обложка {{ title }}",
       "titleTooltip": "Название: {{ title }}",

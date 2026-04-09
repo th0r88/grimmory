@@ -36,6 +36,18 @@
       }
     </div>
 
+    @if (emailSendFailed) {
+      <div class="email-failed-overlay"
+           [pTooltip]="'book.card.emailSendFailed' | transloco"
+           tooltipPosition="bottom"
+           (click)="retryAutoEmail($event)"
+           role="button"
+           tabindex="0"
+           [attr.aria-label]="'book.card.emailRetry' | transloco">
+        <i class="pi pi-envelope" style="color: var(--red-500); font-size: 1rem;"></i>
+      </div>
+    }
+
     @if (_isSeriesViewActive) {
       <p-button [rounded]="true" icon="pi pi-info" class="info-btn" (click)="openSeriesInfo()" [ariaLabel]="'book.card.alt.viewSeriesInfo' | transloco"></p-button>
     } @else {

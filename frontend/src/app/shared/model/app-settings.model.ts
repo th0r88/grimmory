@@ -175,6 +175,7 @@ export interface OidcTestResult {
 export interface AppSettings {
   autoBookSearch: boolean;
   similarBookRecommendation: boolean;
+  autoEmailOnBookAdd: boolean;
   defaultMetadataRefreshOptions: MetadataRefreshOptions;
   libraryMetadataRefreshOptions: MetadataRefreshOptions[];
   uploadPattern: string;
@@ -246,4 +247,5 @@ export enum AppSettingKey {
   OIDC_SESSION_DURATION_HOURS = 'OIDC_SESSION_DURATION_HOURS',
   OIDC_GROUP_SYNC_MODE = 'OIDC_GROUP_SYNC_MODE',
   OIDC_FORCE_ONLY_MODE = 'OIDC_FORCE_ONLY_MODE',
+  AUTO_EMAIL_ON_BOOK_ADD = 'AUTO_EMAIL_ON_BOOK_ADD',
 }

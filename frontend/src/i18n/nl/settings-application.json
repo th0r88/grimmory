@@ -34,6 +34,11 @@
     "invalidInput": "Ongeldige invoer",
     "invalidInputDetail": "Voer een geldige maximale uploadgrootte in MB in."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Instellingen opgeslagen",
   "settingsSavedDetail": "De instellingen zijn succesvol opgeslagen!",
   "settingsError": "Er is een fout opgetreden bij het opslaan van de instellingen."

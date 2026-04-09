@@ -17,6 +17,7 @@ public class AppSettings {
     private List<MetadataRefreshOptions> libraryMetadataRefreshOptions;
     private boolean autoBookSearch;
     private boolean similarBookRecommendation;
+    private boolean autoEmailOnBookAdd;
     private boolean opdsServerEnabled;
     private boolean komgaApiEnabled;
     private boolean komgaGroupUnknown;

@@ -56,6 +56,9 @@ class SendEmailV2ServiceTest {
     @Mock
     private Executor taskExecutor;
 
+    @Mock
+    private EmailSenderHelper emailSenderHelper;
+
     @InjectMocks
     private SendEmailV2Service sendEmailV2Service;
 

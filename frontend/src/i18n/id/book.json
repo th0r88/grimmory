@@ -109,6 +109,8 @@
     "toast": {
       "quickSendSuccessDetail": "",
       "quickSendErrorDetail": "",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "",
       "deleteFileErrorDetail": "",
       "readStatusUpdatedSummary": "",
@@ -128,6 +130,8 @@
       "customCoverSuccessDetail": "",
       "customCoverFailedDetail": ""
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "",
       "titleTooltip": "",

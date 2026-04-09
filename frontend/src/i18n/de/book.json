@@ -109,6 +109,8 @@
     "toast": {
       "quickSendSuccessDetail": "Der Buchversand wurde geplant.",
       "quickSendErrorDetail": "Beim Senden des Buches ist ein Fehler aufgetreten.",
+      "autoEmailRetrySuccess": "Auto-email retry has been scheduled.",
+      "autoEmailRetryError": "Failed to retry auto-email.",
       "deleteFileSuccessDetail": "Zusätzliche Datei \"{{ fileName }}\" erfolgreich gelöscht",
       "deleteFileErrorDetail": "Zusätzliche Datei konnte nicht gelöscht werden: {{ error }}",
       "readStatusUpdatedSummary": "Lesestatus aktualisiert",
@@ -128,6 +130,8 @@
       "customCoverSuccessDetail": "Cover erfolgreich generiert",
       "customCoverFailedDetail": "Cover-Generierung fehlgeschlagen"
     },
+    "emailSendFailed": "Auto-email failed. Click to retry.",
+    "emailRetry": "Retry auto-email",
     "alt": {
       "cover": "Cover von {{ title }}",
       "titleTooltip": "Titel: {{ title }}",

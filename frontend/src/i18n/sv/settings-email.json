@@ -4,6 +4,10 @@
   "accessRestricted": "Åtkomst begränsad",
   "accessDenied": "Åtkomst till e-postkonfiguration är begränsad.",
   "contactAdmin": "Kontakta din administratör för att begära behörighet.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "E-postleverantörer",
     "description": "Konfigurera e-posttjänster som Gmail, Outlook eller anpassade SMTP-servrar. Standardleverantören används för \"Snabbskicka bok\" i bokkortsmenyn.",

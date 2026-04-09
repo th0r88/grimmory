@@ -34,6 +34,11 @@
     "invalidInput": "",
     "invalidInputDetail": ""
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "",
   "settingsSavedDetail": "",
   "settingsError": ""

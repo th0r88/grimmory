@@ -158,6 +158,33 @@
     <div class="preferences-section">
       <div class="section-header">
         <h3 class="section-title">
+          <i class="pi pi-envelope"></i>
+          {{ t('email.sectionTitle') }}
+        </h3>
+      </div>
+
+      <div class="settings-card">
+        <div class="setting-item">
+          <div class="setting-info">
+            <div class="setting-label-row">
+              <span class="setting-label">{{ t('email.autoEmailOnBookAdd') }}</span>
+              <p-toggleswitch
+                [(ngModel)]="toggles.autoEmailOnBookAdd"
+                (onChange)="onToggleChange('autoEmailOnBookAdd', $event.checked)">
+              </p-toggleswitch>
+            </div>
+            <p class="setting-description">
+              <i class="pi pi-info-circle"></i>
+              {{ t('email.autoEmailOnBookAddDesc') }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preferences-section">
+      <div class="section-header">
+        <h3 class="section-title">
           <i class="pi pi-upload"></i>
           {{ t('fileManagement.sectionTitle') }}
         </h3>

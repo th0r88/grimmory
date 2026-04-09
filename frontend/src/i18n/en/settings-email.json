@@ -4,6 +4,10 @@
   "accessRestricted": "Access Restricted",
   "accessDenied": "Access to Email Configuration is restricted.",
   "contactAdmin": "Please contact your administrator to request permission.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "Email Providers",
     "description": "Configure email-sending services like Gmail, Outlook, or custom SMTP servers. The default provider is used for 'Quick Book Send' in the Book Card menu.",

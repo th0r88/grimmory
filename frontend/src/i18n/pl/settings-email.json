@@ -4,6 +4,10 @@
   "accessRestricted": "Dostęp ograniczony",
   "accessDenied": "Dostęp do konfiguracji e-mail jest ograniczony.",
   "contactAdmin": "Skontaktuj się z administratorem, aby poprosić o uprawnienia.",
+  "autoEmail": {
+    "label": "Auto-Email on Book Add",
+    "description": "When enabled, newly added books in your accessible libraries will be automatically emailed to your default recipient using your default email provider."
+  },
   "provider": {
     "title": "Dostawcy e-mail",
     "description": "Skonfiguruj usługi wysyłania e-maili, takie jak Gmail, Outlook lub niestandardowe serwery SMTP. Domyślny dostawca jest używany do 'Szybkiego wysyłania książki' w menu karty książki.",

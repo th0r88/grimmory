@@ -34,6 +34,11 @@
     "invalidInput": "Неверные данные",
     "invalidInputDetail": "Пожалуйста, введите корректный максимальный размер файла в МБ."
   },
+  "email": {
+    "sectionTitle": "Email",
+    "autoEmailOnBookAdd": "Auto-Email on Book Add",
+    "autoEmailOnBookAddDesc": "Automatically email newly added books to users who have opted in with their default email provider and recipient."
+  },
   "settingsSaved": "Настройки сохранены",
   "settingsSavedDetail": "Настройки были успешно сохранены!",
   "settingsError": "Произошла ошибка при сохранении настроек."

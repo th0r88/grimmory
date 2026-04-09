@@ -3,6 +3,7 @@ package org.booklore.service.event;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.booklore.model.dto.Book;
+import org.booklore.service.email.AutoEmailService;
 import org.booklore.service.kobo.KoboAutoShelfService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ public class BookAddedEventListener {
 
     private final BookEventBroadcaster bookEventBroadcaster;
     private final KoboAutoShelfService koboAutoShelfService;
+    private final AutoEmailService autoEmailService;
 
     @Async("taskExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT, fallbackExecution = true)
@@ -30,7 +32,8 @@ public class BookAddedEventListener {
             log.debug("Processing book added event for book ID {}", book.getId());
             bookEventBroadcaster.broadcastBookAddEvent(book);
             koboAutoShelfService.autoAddBookToKoboShelves(book.getId());
-            log.info("Book {} notifications and Kobo shelf updates completed", book.getId());
+            autoEmailService.autoEmailBookToEligibleUsers(book.getId(), book.getLibraryId());
+            log.info("Book {} notifications, Kobo shelf updates, and auto-email completed", book.getId());
         } catch (Exception e) {
             log.error("Failed to process book added event for book ID {}: {}", book.getId(), e.getMessage(), e);
         }

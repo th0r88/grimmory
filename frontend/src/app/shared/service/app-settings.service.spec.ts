@@ -66,6 +66,7 @@ function buildAppSettings(overrides: Partial<AppSettings> = {}): AppSettings {
     oidcGroupSyncMode: null,
     oidcForceOnlyMode: publicSettings.oidcForceOnlyMode,
     diskType: 'LOCAL',
+    autoEmailOnBookAdd: false,
     ...overrides,
   };
 }

@@ -33,6 +33,7 @@ export class GlobalPreferencesComponent implements OnInit {
   toggles = {
     autoBookSearch: false,
     similarBookRecommendation: false,
+    autoEmailOnBookAdd: false,
   };
 
   coverCroppingSettings: CoverCroppingSettings = {
@@ -61,6 +62,7 @@ export class GlobalPreferencesComponent implements OnInit {
     }
     this.toggles.autoBookSearch = settings.autoBookSearch ?? false;
     this.toggles.similarBookRecommendation = settings.similarBookRecommendation ?? false;
+    this.toggles.autoEmailOnBookAdd = settings.autoEmailOnBookAdd ?? false;
   });
 
   maxFileUploadSizeInMb?: number;
@@ -81,6 +83,7 @@ export class GlobalPreferencesComponent implements OnInit {
     const toggleKeyMap: Record<string, AppSettingKey> = {
       autoBookSearch: AppSettingKey.AUTO_BOOK_SEARCH,
       similarBookRecommendation: AppSettingKey.SIMILAR_BOOK_RECOMMENDATION,
+      autoEmailOnBookAdd: AppSettingKey.AUTO_EMAIL_ON_BOOK_ADD,
     };
     const keyToSend = toggleKeyMap[settingKey];
     if (keyToSend) {

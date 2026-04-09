@@ -302,6 +302,7 @@ export interface UserSettings {
   dashboardConfig?: DashboardConfig;
   koReaderEnabled: boolean;
   autoSaveMetadata: boolean;
+  autoEmailOnBookAdd?: boolean | string;
 }
 
 export interface User {
