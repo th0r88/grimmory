@@ -935,7 +935,8 @@ export class BookCardComponent implements OnInit, OnChanges {
       next: (statuses) => {
         this.emailSendFailed = !!statuses[this.book.id];
         this.cdr.markForCheck();
-      }
+      },
+      error: () => { /* silently ignore — status check is best-effort */ }
     });
   }
 
