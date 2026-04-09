@@ -8,8 +8,10 @@ import org.booklore.model.entity.*;
 import org.booklore.model.websocket.LogNotification;
 import org.booklore.model.websocket.Topic;
 import org.booklore.repository.*;
+import org.booklore.model.enums.AuditAction;
 import org.booklore.service.NotificationService;
 import org.booklore.service.appsettings.AppSettingService;
+import org.booklore.service.audit.AuditService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +35,7 @@ public class AutoEmailService {
     private final BookEmailStatusRepository bookEmailStatusRepository;
     private final EmailSenderHelper emailSenderHelper;
     private final NotificationService notificationService;
+    private final AuditService auditService;
     private final Executor taskExecutor;
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
@@ -150,6 +153,8 @@ public class AutoEmailService {
             try {
                 emailSenderHelper.sendEmail(provider.get(), recipientEmail, book, bookFile);
                 upsertStatus(book, userEntity, "SENT", null);
+                auditService.logForUser(AuditAction.BOOK_SENT, "Book", book.getId(),
+                        "Auto-email: Sent book '" + bookTitle + "' to " + recipientEmail, userId, username);
                 notificationService.sendMessageToUser(username, Topic.LOG,
                         LogNotification.info("Auto-email: Book '" + bookTitle + "' sent to " + recipientEmail));
                 log.info("Auto-email succeeded for book '{}' to user {}", bookTitle, username);
