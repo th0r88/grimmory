@@ -57,7 +57,16 @@ public class SecurityConfig {
             "/kobo/**",                // Kobo API requests (auth handled in KoboAuthFilter)
             "/api/docs",               // API documentation UI
             "/api/openapi.json",       // OpenAPI spec (used by API documentation UI)
-            "/api/v1/auth/**",         // Login and token refresh endpoints (must remain public)
+            // Only the genuinely public auth endpoints are listed. They must be enumerated
+            // individually: anything excluded here never gets the JWT filter, so an
+            // authenticated endpoint such as /api/v1/auth/register would see an empty
+            // SecurityContext and fail its @PreAuthorize check with 403.
+            "/api/v1/auth/login",      // Login endpoint (must remain public)
+            "/api/v1/auth/refresh",    // Token refresh endpoint (must remain public)
+            "/api/v1/auth/remote",     // Remote-header authentication (must remain public)
+            "/api/v1/auth/logout",     // Logout falls back to the refresh token when unauthenticated
+            "/api/v1/auth/oidc",       // OIDC login flow (must remain public)
+            "/api/v1/auth/oidc/**",    // OIDC login flow (must remain public)
             "/api/v1/public-settings", // Public endpoint for checking OIDC or other app settings
             "/api/v1/setup/**",        // Setup wizard endpoints (must remain accessible before initial setup)
             "/api/v1/healthcheck/**"   // Healthcheck endpoints (must remain accessible for Docker healthchecks)
@@ -67,6 +76,26 @@ public class SecurityConfig {
             "/api/v1/opds/search.opds",
             "/api/v2/opds/search.opds"
     };
+
+    private static final PathPatternParser PATH_PATTERN_PARSER = new PathPatternParser();
+
+    private static final List<PathPattern> JWT_CHAIN_PATTERNS = Stream.of(
+            "/api/**",
+            "/komga/**"
+    ).map(PATH_PATTERN_PARSER::parse).toList();
+
+    private static final List<PathPattern> JWT_CHAIN_WHITELISTED_PATTERNS = Stream.concat(
+            Arrays.stream(COMMON_PUBLIC_ENDPOINTS),
+            Stream.of(
+                    "/api/v1/opds",
+                    "/api/v1/opds/**",
+                    "/api/v2/opds",
+                    "/api/v2/opds/**",
+                    "/api/kobo",
+                    "/api/kobo/**",
+                    "/api/v1/setup"
+            )
+    ).map(PATH_PATTERN_PARSER::parse).toList();
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -234,39 +263,23 @@ public class SecurityConfig {
         return http.build();
     }
 
+    /**
+     * True when the request path must be handled by the authenticated JWT API chain.
+     * Package-private so the routing rules can be asserted without booting the app.
+     */
+    static boolean requiresJwtApiChain(String requestUri) {
+        var pathContainer = PathContainer.parsePath(requestUri);
+        if (JWT_CHAIN_PATTERNS.parallelStream().noneMatch(p -> p.matches(pathContainer))) {
+            return false;
+        }
+        return JWT_CHAIN_WHITELISTED_PATTERNS.parallelStream().noneMatch(p -> p.matches(pathContainer));
+    }
+
     @Bean
     @Order(9)
     public SecurityFilterChain jwtApiSecurityChain(HttpSecurity http) throws Exception {
-        var parser = new PathPatternParser();
-        final List<PathPattern> matchPatterns = Stream.of(
-                "/api/**",
-                "/komga/**"
-        ).map(parser::parse).toList();
-        final List<PathPattern> whitelistedPatterns = Stream.concat(
-                Arrays.stream(COMMON_PUBLIC_ENDPOINTS),
-                Stream.of(
-                        "/api/v1/opds",
-                        "/api/v1/opds/**",
-                        "/api/v2/opds",
-                        "/api/v2/opds/**",
-                        "/api/kobo",
-                        "/api/kobo/**",
-                        "/api/v1/auth/refresh",
-                        "/api/v1/setup"
-                )
-        ).map(parser::parse).toList();
-
         http
-                .securityMatcher(request -> {
-                    var pathContainer = PathContainer.parsePath(request.getRequestURI());
-                    if (matchPatterns.parallelStream().noneMatch(p -> p.matches(pathContainer))) {
-                        return false;
-                    }
-                    if (whitelistedPatterns.parallelStream().anyMatch(p -> p.matches(pathContainer))) {
-                        return false;
-                    }
-                    return true;
-                })
+                .securityMatcher(request -> requiresJwtApiChain(request.getRequestURI()))
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
