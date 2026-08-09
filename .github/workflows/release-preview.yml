@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: 'Ref or commit to preview as the next stable release candidate promoted onto main'
+        description: 'Ref or commit to preview as the next stable release candidate'
         required: false
         default: develop
         type: string
@@ -28,26 +28,32 @@ jobs:
         run: |
           set -eu
 
-          git fetch origin main --tags --force
+          git fetch origin --tags --force
 
-          if ! git merge-base --is-ancestor origin/main HEAD; then
-            echo "Selected ref does not contain origin/main and cannot be promoted cleanly to main" >&2
-            exit 1
+          last_tag="$(git describe --tags --abbrev=0 --match 'v*' 2>/dev/null || true)"
+
+          if [ -n "$last_tag" ]; then
+            range="${last_tag}..HEAD"
+          else
+            range="HEAD"
           fi
 
-          echo "Previewing release candidate range origin/main..HEAD"
+          echo "Previewing release candidate range ${range}"
           {
             echo "## Stable Release Preview"
             echo
-            echo "- Base branch: \`main\`"
+            echo "- Release branch: \`develop\`"
             echo "- Candidate ref: \`$(git rev-parse --short HEAD)\`"
-            echo "- Range: \`origin/main..HEAD\`"
+            echo "- Last release tag: \`${last_tag:-none}\`"
+            echo "- Range: \`${range}\`"
             echo
             echo "### Included Commits"
-            git log --reverse --no-merges --pretty='- %h %s' origin/main..HEAD || true
+            git log --reverse --no-merges --pretty='- %h %s' "$range" || true
           } >> "$GITHUB_STEP_SUMMARY"
 
-          git checkout -B main "$(git rev-parse HEAD)"
+          # semantic-release only publishes from its configured branch, so put the
+          # candidate ref on a local develop branch before the dry run.
+          git checkout -B develop "$(git rev-parse HEAD)"
 
       - name: Install just
         uses: taiki-e/install-action@a1df9120380005ebdc788c62449b841b205541dd # v2.71.0

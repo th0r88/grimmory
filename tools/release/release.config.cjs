@@ -1,6 +1,6 @@
 module.exports = {
-  repositoryUrl: "https://github.com/grimmory-tools/grimmory.git",
-  branches: ["main"],
+  repositoryUrl: "https://github.com/th0r88/grimmory.git",
+  branches: ["develop"],
   tagFormat: "v${version}",
   plugins: [
     [

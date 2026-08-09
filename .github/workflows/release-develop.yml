@@ -1,40 +1,30 @@
 name: Release - Semantic Stable
 
+# Releases are cut from develop, which is this repository's trunk and default
+# branch. This workflow deliberately does not re-run the migration check or the
+# test suite: it is chained off "CI - Validate", which already runs both on every
+# push to develop, and only proceeds when that run succeeded.
 on:
-  push:
+  workflow_run:
+    workflows: ["CI - Validate"]
+    types:
+      - completed
     branches:
-      - main
+      - develop
 
 concurrency:
-  group: release-main
+  group: release-develop
   cancel-in-progress: false
 
 jobs:
-  migration-check:
-    name: Flyway Migration Check
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
-    uses: ./.github/workflows/migrations-check.yml
-    with:
-      base_ref: ${{ github.event.before }}
-      head_ref: ${{ github.sha }}
-      checkout_ref: ${{ github.sha }}
-
-  test-suite:
-    name: Test Suite
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
-    needs: [migration-check]
-    uses: ./.github/workflows/test-suite.yml
-    permissions:
-      contents: read
-      checks: write
-    with:
-      checkout_ref: ${{ github.sha }}
-      save_gradle_cache: true
-
   semantic-release:
     name: Compute Release, Update Changelog, and Draft GitHub Release
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
-    needs: [migration-check, test-suite]
+    # Skip release commits so semantic-release does not chase its own tail, and
+    # only release when the validating run actually passed.
+    if: >-
+      ${{ github.event.workflow_run.event == 'push'
+          && github.event.workflow_run.conclusion == 'success'
+          && !contains(github.event.workflow_run.head_commit.message, '[skip ci]') }}
     runs-on: ubuntu-latest
 
     outputs:
@@ -49,8 +39,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
+          # semantic-release refuses to publish from a detached HEAD, so check out
+          # the branch itself rather than the validated SHA.
+          ref: develop
           fetch-depth: 0
           persist-credentials: false
+
+      - name: Verify Validated Commit Is Still Current
+        env:
+          VALIDATED_SHA: ${{ github.event.workflow_run.head_sha }}
+        run: |
+          set -eu
+          head_sha="$(git rev-parse HEAD)"
+
+          if [ "$head_sha" != "$VALIDATED_SHA" ]; then
+            echo "develop has moved from $VALIDATED_SHA to $head_sha since validation." >&2
+            echo "Releasing the current tip; the newer commits will be validated by their own run." >&2
+          fi
 
       - name: Install just
         uses: taiki-e/install-action@a1df9120380005ebdc788c62449b841b205541dd # v2.71.0
@@ -130,46 +135,3 @@ jobs:
     with:
       release_tag: ${{ needs.semantic-release.outputs.release_tag }}
       commit_sha: ${{ needs.semantic-release.outputs.release_sha }}
-
-  backport-release:
-    name: Backport Release Commit to Develop
-    if: ${{ needs.semantic-release.outputs.released == 'true' && needs.publish-release.result == 'success' }}
-    needs: [semantic-release, publish-release]
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-
-      - name: Configure Release Bot Git Identity
-        env:
-          RELEASE_GH_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN != '' && secrets.RELEASE_BOT_TOKEN || github.token }}
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git remote set-url origin "https://x-access-token:${RELEASE_GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
-
-      - name: Cherry-pick Release Commit onto Develop
-        env:
-          RELEASE_SHA: ${{ needs.semantic-release.outputs.release_sha }}
-          RELEASE_TAG: ${{ needs.semantic-release.outputs.release_tag }}
-        run: |
-          set -eu
-          release_version="${RELEASE_TAG#v}"
-
-          git fetch origin main develop --tags
-          git checkout -B develop origin/develop
-
-          if git log --format=%s origin/develop | grep -Fxq "chore(release): ${release_version} [skip ci]"; then
-            echo "Develop already contains the release commit for ${RELEASE_TAG}; skipping backport."
-            exit 0
-          fi
-
-          git cherry-pick -x "$RELEASE_SHA"
-          git push origin HEAD:develop

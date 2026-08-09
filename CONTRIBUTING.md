@@ -347,7 +347,7 @@ Release impact is derived from commit type:
 5. Run the linter and fix any issues
 6. Push to your fork and open a PR targeting `develop`
 
-Maintainers promote cleaned `develop` history to `main` for stable releases. Do not expect a second squash step from `develop` to `main`; release automation depends on preserved conventional commit history.
+`develop` is the release branch: release automation cuts stable versions directly from it once CI is green. Release automation depends on preserved conventional commit history, so keep commit subjects accurate — a `feat:` or `fix:` landing on `develop` will ship.
 
 ---
 

@@ -41,10 +41,22 @@ jobs:
           ref: ${{ inputs.commit_sha != '' && inputs.commit_sha || format('refs/tags/{0}', inputs.release_tag) }}
 
       - name: Record Release Tag and Commit
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
         run: |
-          echo "release_tag=${{ inputs.release_tag }}" >> "$GITHUB_ENV"
+          set -eu
+
+          case "$RELEASE_TAG" in
+            v[0-9]*) ;;
+            *)
+              echo "Refusing to publish malformed release tag: $RELEASE_TAG" >&2
+              exit 1
+              ;;
+          esac
+
+          echo "release_tag=$RELEASE_TAG" >> "$GITHUB_ENV"
           echo "commit_sha=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
-          echo "Stable release tag: ${{ inputs.release_tag }}"
+          echo "Stable release tag: $RELEASE_TAG"
 
       - name: Set Up QEMU for Multi-Arch Builds
         uses: docker/setup-qemu-action@ce360397dd3f832beb865e1373c09c0e9f86d70a # v4.0.0
@@ -89,8 +101,17 @@ jobs:
             type=gha,scope=image-shared,mode=max
             type=registry,ref=ghcr.io/th0r88/grimmory:buildcache,mode=max
 
-      - name: Publish Draft GitHub Release
+      - name: Publish GitHub Release
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_BOT_TOKEN != '' && secrets.RELEASE_BOT_TOKEN || github.token }}
         run: |
-          gh release edit "${{ env.release_tag }}" --draft=false
+          set -eu
+
+          # semantic-release drafts the release before this workflow runs, but a
+          # manual workflow_dispatch on an existing tag has no draft to publish.
+          if gh release view "$release_tag" > /dev/null 2>&1; then
+            gh release edit "$release_tag" --draft=false
+          else
+            echo "No GitHub release exists for $release_tag; creating one."
+            gh release create "$release_tag" --title "$release_tag" --generate-notes
+          fi
