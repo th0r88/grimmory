@@ -27,8 +27,10 @@ public class EmailRecipientV2Controller {
     @ApiResponse(responseCode = "200", description = "Email recipients returned successfully")
     @PreAuthorize("@securityUtil.isAdmin() or @securityUtil.canEmailBook()")
     @GetMapping
-    public ResponseEntity<List<EmailRecipientV2>> getEmailRecipients() {
-        return ResponseEntity.ok(service.getEmailRecipients());
+    public ResponseEntity<List<EmailRecipientV2>> getEmailRecipients(
+            @Parameter(description = "Filter recipients by owning user id (admin only)") @RequestParam(required = false) Long userId,
+            @Parameter(description = "Set to \"all\" to list recipients across all owners (admin only)") @RequestParam(name = "scope", required = false) String scope) {
+        return ResponseEntity.ok(service.getEmailRecipients(userId, "all".equals(scope)));
     }
 
     @Operation(summary = "Get an email recipient by ID", description = "Retrieve details of a specific email recipient.")

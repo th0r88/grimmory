@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class EmailRecipientV2 {
     private Long id;
     private Long userId;
+    private String ownerUsername;
     private String email;
     private String name;
     private boolean defaultRecipient;
