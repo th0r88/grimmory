@@ -146,6 +146,8 @@ describe('BookSenderComponent', () => {
 
     expect(providerService.getEmailProviders).toHaveBeenCalledOnce();
     expect(recipientService.getRecipients).toHaveBeenCalledOnce();
+    expect(recipientService.getRecipients).toHaveBeenCalledWith();
+    expect(component.recipientsLoaded).toBe(true);
     expect(component.emailProviders).toEqual([
       {
         label: 'Primary SMTP | books@example.com',
@@ -277,6 +279,16 @@ describe('BookSenderComponent', () => {
     });
     expect(dialogRef.close).not.toHaveBeenCalled();
     expect(consoleErrorSpy).toHaveBeenCalledOnce();
+  });
+
+  it('marks recipients as loaded with an empty list when the recipient request fails', () => {
+    recipientService.getRecipients.mockReturnValueOnce(throwError(() => new Error('network down')));
+
+    const component = instantiateComponent();
+    component.ngOnInit();
+
+    expect(component.recipientsLoaded).toBe(true);
+    expect(component.emailRecipients).toEqual([]);
   });
 
   function instantiateComponent(book: Book = createBook()): BookSenderComponent {

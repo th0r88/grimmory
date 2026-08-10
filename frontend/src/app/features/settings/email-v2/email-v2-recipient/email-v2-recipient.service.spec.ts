@@ -38,6 +38,26 @@ describe('EmailV2RecipientService', () => {
     request.flush([{id: 1, email: 'reader@test', name: 'Reader', defaultRecipient: true, isEditing: false}]);
   });
 
+  it('loads every owner\'s recipients when scoped to all', () => {
+    service.getRecipients({scopeAll: true}).subscribe(recipients => {
+      expect(recipients).toEqual([{id: 1, email: 'reader@test', name: 'Reader', defaultRecipient: true, isEditing: false, userId: 5, ownerUsername: 'admin'}]);
+    });
+
+    const request = httpTestingController.expectOne(`${API_CONFIG.BASE_URL}/api/v1/email/recipients?scope=all`);
+    expect(request.request.method).toBe('GET');
+    request.flush([{id: 1, email: 'reader@test', name: 'Reader', defaultRecipient: true, isEditing: false, userId: 5, ownerUsername: 'admin'}]);
+  });
+
+  it('loads a specific owner\'s recipients when filtered by userId', () => {
+    service.getRecipients({userId: 7}).subscribe(recipients => {
+      expect(recipients).toEqual([{id: 2, email: 'other@test', name: 'Other', defaultRecipient: true, isEditing: false, userId: 7, ownerUsername: 'reader'}]);
+    });
+
+    const request = httpTestingController.expectOne(`${API_CONFIG.BASE_URL}/api/v1/email/recipients?userId=7`);
+    expect(request.request.method).toBe('GET');
+    request.flush([{id: 2, email: 'other@test', name: 'Other', defaultRecipient: true, isEditing: false, userId: 7, ownerUsername: 'reader'}]);
+  });
+
   it('creates a recipient', () => {
     const recipient = {id: 1, email: 'reader@test', name: 'Reader', defaultRecipient: false, isEditing: false};
 
