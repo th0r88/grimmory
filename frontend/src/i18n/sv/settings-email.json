@@ -126,7 +126,15 @@
       "successDetail": "{{name}} har lagts till.",
       "failed": "Skapande av mottagare misslyckades",
       "failedDetail": "Kunde inte skapa mottagare: {{message}}",
-      "failedDefault": "Ett oväntat fel uppstod vid tillägg av mottagaren. Försök igen senare."
-    }
+      "failedDefault": "Ett oväntat fel uppstod vid tillägg av mottagaren. Försök igen senare.",
+      "assignTo": "Tilldela till",
+      "assignToPlaceholder": "Välj en användare",
+      "assignToLoadError": "Det gick inte att läsa in användare"
+    },
+    "owner": "Ägare",
+    "ownerFilter": "Filtrera efter ägare",
+    "ownerFilterAll": "Alla ägare",
+    "ownerFilterError": "Det gick inte att läsa in mottagare för den valda användaren",
+    "filteredEmptyTitle": "Inga mottagare matchar detta filter"
   }
 }

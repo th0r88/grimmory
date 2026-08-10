@@ -126,7 +126,15 @@
       "successDetail": "{{name}} has been successfully added.",
       "failed": "Recipient Creation Failed",
       "failedDetail": "Unable to create recipient: {{message}}",
-      "failedDefault": "An unexpected error occurred while adding the recipient. Please try again later."
-    }
+      "failedDefault": "An unexpected error occurred while adding the recipient. Please try again later.",
+      "assignTo": "Assign to",
+      "assignToPlaceholder": "Select a user",
+      "assignToLoadError": "Failed to load users"
+    },
+    "owner": "Owner",
+    "ownerFilter": "Filter by owner",
+    "ownerFilterAll": "All owners",
+    "ownerFilterError": "Failed to load recipients for the selected user",
+    "filteredEmptyTitle": "No recipients match this filter"
   }
 }

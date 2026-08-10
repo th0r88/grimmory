@@ -126,7 +126,15 @@
       "successDetail": "",
       "failed": "",
       "failedDetail": "",
-      "failedDefault": ""
-    }
+      "failedDefault": "",
+      "assignTo": "Priradiť k",
+      "assignToPlaceholder": "Vyberte používateľa",
+      "assignToLoadError": "Nepodarilo sa načítať používateľov"
+    },
+    "owner": "Vlastník",
+    "ownerFilter": "Filtrovať podľa vlastníka",
+    "ownerFilterAll": "Všetci vlastníci",
+    "ownerFilterError": "Nepodarilo sa načítať príjemcov pre vybraného používateľa",
+    "filteredEmptyTitle": "Žiadny príjemca nezodpovedá tomuto filtru"
   }
 }

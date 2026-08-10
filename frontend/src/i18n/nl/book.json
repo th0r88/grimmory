@@ -743,7 +743,9 @@
       "recipientMissingDetail": "",
       "bookNotSelectedSummary": "",
       "bookNotSelectedDetail": ""
-    }
+    },
+    "noRecipientsTitle": "Geen ontvangers geconfigureerd",
+    "noRecipientsBody": "Voeg er een toe bij Instellingen → E-mail voordat u boeken verzendt."
   },
   "seriesPage": {
     "seriesDetailsTab": "",

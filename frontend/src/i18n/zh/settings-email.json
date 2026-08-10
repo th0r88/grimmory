@@ -126,7 +126,15 @@
       "successDetail": "{{name}} 已成功添加。",
       "failed": "收件人创建失败",
       "failedDetail": "无法创建收件人：{{message}}",
-      "failedDefault": "添加收件人时发生意外错误。请稍后重试。"
-    }
+      "failedDefault": "添加收件人时发生意外错误。请稍后重试。",
+      "assignTo": "分配给",
+      "assignToPlaceholder": "选择用户",
+      "assignToLoadError": "加载用户失败"
+    },
+    "owner": "所有者",
+    "ownerFilter": "按所有者筛选",
+    "ownerFilterAll": "所有所有者",
+    "ownerFilterError": "加载所选用户的收件人失败",
+    "filteredEmptyTitle": "没有符合此筛选条件的收件人"
   }
 }

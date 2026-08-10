@@ -126,7 +126,15 @@
       "successDetail": "{{name}} je uspješno dodan.",
       "failed": "Kreiranje primatelja nije uspjelo",
       "failedDetail": "Nije moguće kreirati primatelja: {{message}}",
-      "failedDefault": "Došlo je do neočekivane pogreške prilikom dodavanja primatelja. Pokušajte ponovo kasnije."
-    }
+      "failedDefault": "Došlo je do neočekivane pogreške prilikom dodavanja primatelja. Pokušajte ponovo kasnije.",
+      "assignTo": "Dodijeli korisniku",
+      "assignToPlaceholder": "Odaberite korisnika",
+      "assignToLoadError": "Učitavanje korisnika nije uspjelo"
+    },
+    "owner": "Vlasnik",
+    "ownerFilter": "Filtriraj po vlasniku",
+    "ownerFilterAll": "Svi vlasnici",
+    "ownerFilterError": "Učitavanje primatelja za odabranog korisnika nije uspjelo",
+    "filteredEmptyTitle": "Nijedan primatelj ne odgovara ovom filtru"
   }
 }

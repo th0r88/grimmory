@@ -748,7 +748,9 @@
       "recipientMissingDetail": "Виберіть одержувача, щоб надіслати книгу.",
       "bookNotSelectedSummary": "Книгу не вибрано",
       "bookNotSelectedDetail": "Виберіть книгу для надсилання."
-    }
+    },
+    "noRecipientsTitle": "Одержувачів не налаштовано",
+    "noRecipientsBody": "Додайте одержувача в Налаштування → Пошта перед надсиланням книг."
   },
   "seriesPage": {
     "seriesDetailsTab": "Деталі серії",

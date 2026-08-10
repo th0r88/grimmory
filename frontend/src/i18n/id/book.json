@@ -744,7 +744,9 @@
       "recipientMissingDetail": "",
       "bookNotSelectedSummary": "",
       "bookNotSelectedDetail": ""
-    }
+    },
+    "noRecipientsTitle": "Tidak ada penerima yang dikonfigurasi",
+    "noRecipientsBody": "Tambahkan satu di Pengaturan → Email sebelum mengirim buku."
   },
   "seriesPage": {
     "seriesDetailsTab": "",

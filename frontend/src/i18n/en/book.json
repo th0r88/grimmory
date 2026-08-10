@@ -792,7 +792,9 @@
       "recipientMissingDetail": "Please select a recipient to send the book.",
       "bookNotSelectedSummary": "Book Not Selected",
       "bookNotSelectedDetail": "Please select a book to send."
-    }
+    },
+    "noRecipientsTitle": "No recipients configured",
+    "noRecipientsBody": "Add one in Settings → Email before sending books."
   },
   "seriesPage": {
     "seriesDetailsTab": "Series Details",

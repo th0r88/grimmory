@@ -126,7 +126,15 @@
       "successDetail": "",
       "failed": "",
       "failedDetail": "",
-      "failedDefault": ""
-    }
+      "failedDefault": "",
+      "assignTo": "Hozzárendelve",
+      "assignToPlaceholder": "Felhasználó kiválasztása",
+      "assignToLoadError": "Nem sikerült betölteni a felhasználókat"
+    },
+    "owner": "Tulajdonos",
+    "ownerFilter": "Szűrés tulajdonos szerint",
+    "ownerFilterAll": "Összes tulajdonos",
+    "ownerFilterError": "Nem sikerült betölteni a kiválasztott felhasználó címzettjeit",
+    "filteredEmptyTitle": "Nincs a szűrőnek megfelelő címzett"
   }
 }

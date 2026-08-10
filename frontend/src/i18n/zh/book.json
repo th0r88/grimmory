@@ -741,7 +741,9 @@
       "recipientMissingDetail": "请选择一个收件人来发送图书。",
       "bookNotSelectedSummary": "未选择图书",
       "bookNotSelectedDetail": "请选择一本图书进行发送。"
-    }
+    },
+    "noRecipientsTitle": "未配置收件人",
+    "noRecipientsBody": "发送图书前，请在设置 → 邮件中添加一个收件人。"
   },
   "seriesPage": {
     "seriesDetailsTab": "系列详情",

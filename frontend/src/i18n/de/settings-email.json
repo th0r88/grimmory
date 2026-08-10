@@ -126,7 +126,15 @@
       "successDetail": "{{name}} wurde erfolgreich hinzugefügt.",
       "failed": "Empfänger-Erstellung fehlgeschlagen",
       "failedDetail": "Empfänger konnte nicht erstellt werden: {{message}}",
-      "failedDefault": "Beim Hinzufügen des Empfängers ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut."
-    }
+      "failedDefault": "Beim Hinzufügen des Empfängers ist ein unerwarteter Fehler aufgetreten. Bitte versuchen Sie es später erneut.",
+      "assignTo": "Zuweisen an",
+      "assignToPlaceholder": "Benutzer auswählen",
+      "assignToLoadError": "Benutzer konnten nicht geladen werden"
+    },
+    "owner": "Eigentümer",
+    "ownerFilter": "Nach Eigentümer filtern",
+    "ownerFilterAll": "Alle Eigentümer",
+    "ownerFilterError": "Empfänger für den ausgewählten Benutzer konnten nicht geladen werden",
+    "filteredEmptyTitle": "Keine Empfänger entsprechen diesem Filter"
   }
 }

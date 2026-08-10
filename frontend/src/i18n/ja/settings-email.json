@@ -126,7 +126,15 @@
       "successDetail": "{{name}}が正常に追加されました。",
       "failed": "受信者の作成に失敗しました",
       "failedDetail": "受信者を作成できません: {{message}}",
-      "failedDefault": "受信者の追加中に予期しないエラーが発生しました。しばらくしてからもう一度お試しください。"
-    }
+      "failedDefault": "受信者の追加中に予期しないエラーが発生しました。しばらくしてからもう一度お試しください。",
+      "assignTo": "割り当て先",
+      "assignToPlaceholder": "ユーザーを選択",
+      "assignToLoadError": "ユーザーの読み込みに失敗しました"
+    },
+    "owner": "所有者",
+    "ownerFilter": "所有者で絞り込む",
+    "ownerFilterAll": "すべての所有者",
+    "ownerFilterError": "選択したユーザーの受信者の読み込みに失敗しました",
+    "filteredEmptyTitle": "このフィルターに一致する受信者はありません"
   }
 }

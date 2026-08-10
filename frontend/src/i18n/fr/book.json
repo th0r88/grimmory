@@ -743,7 +743,9 @@
       "recipientMissingDetail": "Veuillez sélectionner un destinataire pour envoyer le livre.",
       "bookNotSelectedSummary": "Livre non sélectionné",
       "bookNotSelectedDetail": "Veuillez sélectionner un livre à envoyer."
-    }
+    },
+    "noRecipientsTitle": "Aucun destinataire configuré",
+    "noRecipientsBody": "Ajoutez-en un dans Paramètres → E-mail avant d'envoyer des livres."
   },
   "seriesPage": {
     "seriesDetailsTab": "Détails de la série",

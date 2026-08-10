@@ -126,7 +126,15 @@
       "successDetail": "",
       "failed": "",
       "failedDetail": "",
-      "failedDefault": ""
-    }
+      "failedDefault": "",
+      "assignTo": "Tetapkan ke",
+      "assignToPlaceholder": "Pilih pengguna",
+      "assignToLoadError": "Gagal memuat pengguna"
+    },
+    "owner": "Pemilik",
+    "ownerFilter": "Filter berdasarkan pemilik",
+    "ownerFilterAll": "Semua pemilik",
+    "ownerFilterError": "Gagal memuat penerima untuk pengguna yang dipilih",
+    "filteredEmptyTitle": "Tidak ada penerima yang cocok dengan filter ini"
   }
 }

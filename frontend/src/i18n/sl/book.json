@@ -748,7 +748,9 @@
       "recipientMissingDetail": "Prosim, izberi prejemnika za pošiljanje knjige.",
       "bookNotSelectedSummary": "Knjiga ni izbrana",
       "bookNotSelectedDetail": "Prosim, izberi knjigo za pošiljanje."
-    }
+    },
+    "noRecipientsTitle": "Ni nastavljenih prejemnikov",
+    "noRecipientsBody": "Dodaj ga v Nastavitve → E-pošta, preden pošlješ knjige."
   },
   "seriesPage": {
     "seriesDetailsTab": "Podrobnosti o zbirki",

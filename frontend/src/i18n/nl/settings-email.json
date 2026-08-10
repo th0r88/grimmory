@@ -126,7 +126,15 @@
       "successDetail": "",
       "failed": "",
       "failedDetail": "",
-      "failedDefault": ""
-    }
+      "failedDefault": "",
+      "assignTo": "Toewijzen aan",
+      "assignToPlaceholder": "Selecteer gebruiker",
+      "assignToLoadError": "Kon gebruikers niet laden"
+    },
+    "owner": "Eigenaar",
+    "ownerFilter": "Filteren op eigenaar",
+    "ownerFilterAll": "Alle eigenaren",
+    "ownerFilterError": "Kon ontvangers voor de geselecteerde gebruiker niet laden",
+    "filteredEmptyTitle": "Geen ontvangers voldoen aan dit filter"
   }
 }

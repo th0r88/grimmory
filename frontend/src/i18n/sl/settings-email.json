@@ -126,7 +126,15 @@
       "successDetail": "{{name}} je bil uspešno dodan.",
       "failed": "Dodajanje prejemnika ni uspelo",
       "failedDetail": "Prejemnika ni mogoče ustvariti: {{message}}",
-      "failedDefault": "Prišlo je do nepričakovane napake pri dodajanju prejemnika. Poskusi znova pozneje."
-    }
+      "failedDefault": "Prišlo je do nepričakovane napake pri dodajanju prejemnika. Poskusi znova pozneje.",
+      "assignTo": "Dodeli uporabniku",
+      "assignToPlaceholder": "Izberi uporabnika",
+      "assignToLoadError": "Nalaganje uporabnikov ni uspelo"
+    },
+    "owner": "Lastnik",
+    "ownerFilter": "Filtriraj po lastniku",
+    "ownerFilterAll": "Vsi lastniki",
+    "ownerFilterError": "Nalaganje prejemnikov za izbranega uporabnika ni uspelo",
+    "filteredEmptyTitle": "Noben prejemnik ne ustreza temu filtru"
   }
 }

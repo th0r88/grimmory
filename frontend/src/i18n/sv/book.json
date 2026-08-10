@@ -748,7 +748,9 @@
       "recipientMissingDetail": "Välj en mottagare att skicka boken till.",
       "bookNotSelectedSummary": "Ingen bok vald",
       "bookNotSelectedDetail": "Välj en bok att skicka."
-    }
+    },
+    "noRecipientsTitle": "Inga mottagare konfigurerade",
+    "noRecipientsBody": "Lägg till en under Inställningar → E-post innan du skickar böcker."
   },
   "seriesPage": {
     "seriesDetailsTab": "Seriedetaljer",
