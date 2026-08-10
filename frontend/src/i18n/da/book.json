@@ -791,7 +791,9 @@
       "recipientMissingDetail": "",
       "bookNotSelectedSummary": "",
       "bookNotSelectedDetail": ""
-    }
+    },
+    "noRecipientsTitle": "Ingen modtagere konfigureret",
+    "noRecipientsBody": "Tilføj en under Indstillinger → E-mail, før du sender bøger."
   },
   "seriesPage": {
     "seriesDetailsTab": "",

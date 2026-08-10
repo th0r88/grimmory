@@ -740,7 +740,9 @@
       "recipientMissingDetail": "Пожалуйста, выберите получателя для отправки книги.",
       "bookNotSelectedSummary": "Книга не выбрана",
       "bookNotSelectedDetail": "Пожалуйста, выберите книгу для отправки."
-    }
+    },
+    "noRecipientsTitle": "Получатели не настроены",
+    "noRecipientsBody": "Добавьте получателя в Настройки → Email перед отправкой книг."
   },
   "seriesPage": {
     "seriesDetailsTab": "Детали серии",

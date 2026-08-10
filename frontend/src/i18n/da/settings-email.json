@@ -126,7 +126,15 @@
       "successDetail": "",
       "failed": "",
       "failedDetail": "",
-      "failedDefault": ""
-    }
+      "failedDefault": "",
+      "assignTo": "Tildel til",
+      "assignToPlaceholder": "Vælg en bruger",
+      "assignToLoadError": "Kunne ikke indlæse brugere"
+    },
+    "owner": "Ejer",
+    "ownerFilter": "Filtrer efter ejer",
+    "ownerFilterAll": "Alle ejere",
+    "ownerFilterError": "Kunne ikke indlæse modtagere for den valgte bruger",
+    "filteredEmptyTitle": "Ingen modtagere matcher dette filter"
   }
 }

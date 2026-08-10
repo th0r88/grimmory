@@ -748,7 +748,9 @@
       "recipientMissingDetail": "Bitte wählen Sie einen Empfänger für den Buchversand aus.",
       "bookNotSelectedSummary": "Kein Buch ausgewählt",
       "bookNotSelectedDetail": "Bitte wählen Sie ein Buch zum Senden aus."
-    }
+    },
+    "noRecipientsTitle": "Keine Empfänger konfiguriert",
+    "noRecipientsBody": "Fügen Sie unter Einstellungen → E-Mail einen Empfänger hinzu, bevor Sie Bücher versenden."
   },
   "seriesPage": {
     "seriesDetailsTab": "Seriendetails",

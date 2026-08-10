@@ -126,7 +126,15 @@
       "successDetail": "{{name}} a été ajouté avec succès.",
       "failed": "Échec de la création du destinataire",
       "failedDetail": "Impossible de créer le destinataire : {{message}}",
-      "failedDefault": "Une erreur inattendue s'est produite lors de l'ajout du destinataire. Veuillez réessayer plus tard."
-    }
+      "failedDefault": "Une erreur inattendue s'est produite lors de l'ajout du destinataire. Veuillez réessayer plus tard.",
+      "assignTo": "Attribuer à",
+      "assignToPlaceholder": "Sélectionner un utilisateur",
+      "assignToLoadError": "Échec du chargement des utilisateurs"
+    },
+    "owner": "Propriétaire",
+    "ownerFilter": "Filtrer par propriétaire",
+    "ownerFilterAll": "Tous les propriétaires",
+    "ownerFilterError": "Échec du chargement des destinataires de l'utilisateur sélectionné",
+    "filteredEmptyTitle": "Aucun destinataire ne correspond à ce filtre"
   }
 }

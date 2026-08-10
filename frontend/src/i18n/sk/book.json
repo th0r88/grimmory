@@ -740,7 +740,9 @@
       "recipientMissingDetail": "",
       "bookNotSelectedSummary": "",
       "bookNotSelectedDetail": ""
-    }
+    },
+    "noRecipientsTitle": "Nie sú nakonfigurovaní žiadni príjemcovia",
+    "noRecipientsBody": "Pridajte ho v Nastaveniach → E-mail pred odosielaním kníh."
   },
   "seriesPage": {
     "seriesDetailsTab": "",

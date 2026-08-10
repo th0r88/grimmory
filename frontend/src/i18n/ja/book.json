@@ -740,7 +740,9 @@
       "recipientMissingDetail": "本を送信する受信者を選択してください。",
       "bookNotSelectedSummary": "本が未選択です",
       "bookNotSelectedDetail": "送信する本を選択してください。"
-    }
+    },
+    "noRecipientsTitle": "受信者が設定されていません",
+    "noRecipientsBody": "本を送信する前に、設定 → メールで受信者を追加してください。"
   },
   "seriesPage": {
     "seriesDetailsTab": "シリーズ詳細",

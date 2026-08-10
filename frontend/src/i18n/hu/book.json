@@ -743,7 +743,9 @@
       "recipientMissingDetail": "",
       "bookNotSelectedSummary": "",
       "bookNotSelectedDetail": ""
-    }
+    },
+    "noRecipientsTitle": "Nincs beállítva címzett",
+    "noRecipientsBody": "Adj hozzá egyet a Beállítások → E-mail alatt, mielőtt könyveket küldesz."
   },
   "seriesPage": {
     "seriesDetailsTab": "",

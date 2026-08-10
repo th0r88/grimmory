@@ -126,7 +126,15 @@
       "successDetail": "{{name}} został pomyślnie dodany.",
       "failed": "Tworzenie odbiorcy nie powiodło się",
       "failedDetail": "Nie udało się utworzyć odbiorcy: {{message}}",
-      "failedDefault": "Wystąpił nieoczekiwany błąd podczas dodawania odbiorcy. Spróbuj ponownie później."
-    }
+      "failedDefault": "Wystąpił nieoczekiwany błąd podczas dodawania odbiorcy. Spróbuj ponownie później.",
+      "assignTo": "Przypisz do",
+      "assignToPlaceholder": "Wybierz użytkownika",
+      "assignToLoadError": "Nie udało się załadować użytkowników"
+    },
+    "owner": "Właściciel",
+    "ownerFilter": "Filtruj według właściciela",
+    "ownerFilterAll": "Wszyscy właściciele",
+    "ownerFilterError": "Nie udało się załadować odbiorców dla wybranego użytkownika",
+    "filteredEmptyTitle": "Żaden odbiorca nie pasuje do tego filtra"
   }
 }
