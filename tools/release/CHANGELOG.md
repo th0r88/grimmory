@@ -1,3 +1,17 @@
+## [2.6.1](https://github.com/th0r88/grimmory/compare/v2.6.0...v2.6.1) (2026-08-10)
+
+### Bug Fixes
+
+* **email:** declare correct media type for book attachments ([45d90de](https://github.com/th0r88/grimmory/commit/45d90de9ec4f2ee25277425938703cf9fc74cceb))
+* **email:** sanitise risky characters from email attachment filenames ([466650f](https://github.com/th0r88/grimmory/commit/466650f1c704e5c280135342543a4c84e63afc25))
+* **email:** strip Unicode control and format characters from attachment filenames ([fd5ccc0](https://github.com/th0r88/grimmory/commit/fd5ccc05dc7850ab5e85547b8245515a634f56d9))
+* **email:** treat leading-dot filenames as having an empty base name ([68bcfd1](https://github.com/th0r88/grimmory/commit/68bcfd155f7e491c7d437a9e6059e0d16c8180dd))
+* **email:** use locale-independent extension matching in BookFileExtension ([ccb4f0f](https://github.com/th0r88/grimmory/commit/ccb4f0f1e58f78b8aff4bb82b7721f6fb9f81b00))
+
+### Tests
+
+* **email:** extend EmailSenderHelperTest with MockitoExtension ([b9a402e](https://github.com/th0r88/grimmory/commit/b9a402e3388c2cfed3cdec6cfb011ae6a1ebfdd5))
+
 ## [2.6.0](https://github.com/th0r88/grimmory/compare/v2.5.1...v2.6.0) (2026-08-10)
 
 ### Features
