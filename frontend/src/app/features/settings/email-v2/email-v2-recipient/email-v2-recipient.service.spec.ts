@@ -58,6 +58,14 @@ describe('EmailV2RecipientService', () => {
     request.flush([{id: 2, email: 'other@test', name: 'Other', defaultRecipient: true, isEditing: false, userId: 7, ownerUsername: 'reader'}]);
   });
 
+  it('prefers userId over scopeAll when both are supplied', () => {
+    service.getRecipients({scopeAll: true, userId: 7}).subscribe();
+
+    const request = httpTestingController.expectOne(`${API_CONFIG.BASE_URL}/api/v1/email/recipients?userId=7`);
+    expect(request.request.method).toBe('GET');
+    request.flush([]);
+  });
+
   it('creates a recipient', () => {
     const recipient = {id: 1, email: 'reader@test', name: 'Reader', defaultRecipient: false, isEditing: false};
 

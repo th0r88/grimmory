@@ -19,10 +19,12 @@ export class EmailV2RecipientService {
 
   getRecipients(opts?: GetRecipientsOptions): Observable<EmailRecipient[]> {
     let params = new HttpParams();
-    if (opts?.scopeAll) {
-      params = params.set('scope', 'all');
-    } else if (opts?.userId !== undefined) {
+    // userId wins over scopeAll when both are supplied, matching the backend, which checks
+    // userId before scopeAll in EmailRecipientV2Service.getEmailRecipients.
+    if (opts?.userId !== undefined) {
       params = params.set('userId', opts.userId);
+    } else if (opts?.scopeAll) {
+      params = params.set('scope', 'all');
     }
     return this.http.get<EmailRecipient[]>(this.url, { params });
   }
