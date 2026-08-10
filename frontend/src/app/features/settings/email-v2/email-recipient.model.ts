@@ -4,4 +4,6 @@ export interface EmailRecipient {
   name: string;
   defaultRecipient: boolean;
   isEditing: boolean;
+  userId?: number;
+  ownerUsername?: string;
 }

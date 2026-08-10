@@ -48,6 +48,7 @@ export class BookSenderComponent implements OnInit {
 
   emailProviders: { label: string, value: EmailProvider }[] = [];
   emailRecipients: { label: string, value: EmailRecipient }[] = [];
+  recipientsLoaded = false;
   selectedProvider?: { label: string; value: EmailProvider };
   selectedRecipient?: { label: string; value: EmailRecipient };
 
@@ -72,6 +73,10 @@ export class BookSenderComponent implements OnInit {
           label: `${recipient.name} | ${recipient.email}`,
           value: recipient
         }));
+        this.recipientsLoaded = true;
+      },
+      error: () => {
+        this.recipientsLoaded = true;
       }
     });
   }

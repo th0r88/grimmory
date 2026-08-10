@@ -5,9 +5,11 @@ import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {Checkbox} from 'primeng/checkbox';
 import {Button} from 'primeng/button';
 import {InputText} from 'primeng/inputtext';
+import {Select} from 'primeng/select';
 import {EmailV2RecipientService} from '../email-v2-recipient/email-v2-recipient.service';
 import {Tooltip} from 'primeng/tooltip';
 import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+import {User, UserService} from '../../user-management/user.service';
 
 @Component({
   selector: 'app-create-email-recipient-dialog',
@@ -16,6 +18,7 @@ import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/tran
     ReactiveFormsModule,
     Button,
     InputText,
+    Select,
     Tooltip,
     TranslocoDirective,
     TranslocoPipe
@@ -25,8 +28,13 @@ import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/tran
 })
 export class CreateEmailRecipientDialogComponent {
   emailRecipientForm: FormGroup;
+  readonly isAdmin: boolean;
+  users: User[] = [];
+  usersLoading = false;
+
   private fb = inject(FormBuilder);
   private emailRecipientService = inject(EmailV2RecipientService);
+  private userService = inject(UserService);
   private messageService = inject(MessageService);
   private ref = inject(DynamicDialogRef);
   private readonly t = inject(TranslocoService);
@@ -36,6 +44,32 @@ export class CreateEmailRecipientDialogComponent {
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       defaultRecipient: [false]
+    });
+
+    const currentUser = this.userService.currentUser();
+    this.isAdmin = currentUser?.permissions.admin === true;
+
+    if (this.isAdmin) {
+      this.emailRecipientForm.addControl('userId', this.fb.control<number | null>(currentUser?.id ?? null));
+      this.loadUsers();
+    }
+  }
+
+  private loadUsers(): void {
+    this.usersLoading = true;
+    this.userService.getUsers().subscribe({
+      next: (users) => {
+        this.users = users;
+        this.usersLoading = false;
+      },
+      error: () => {
+        this.usersLoading = false;
+        this.messageService.add({
+          severity: 'error',
+          summary: this.t.translate('common.error'),
+          detail: this.t.translate('settingsEmail.recipient.create.assignToLoadError'),
+        });
+      },
     });
   }
 

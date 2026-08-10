@@ -123,3 +123,38 @@
     line-height: 1.4;
   }
 }
+
+.no-recipients {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: rgb(234 179 8 / 10%);
+  border: 1px solid rgb(234 179 8 / 30%);
+  border-radius: 6px;
+  color: #fbbf24;
+
+  i {
+    font-size: 1rem;
+    margin-top: 0.125rem;
+  }
+
+  .no-recipients-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .no-recipients-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .no-recipients-body {
+    font-size: 0.8rem;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
