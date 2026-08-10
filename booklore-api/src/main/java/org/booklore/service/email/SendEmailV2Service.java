@@ -22,6 +22,9 @@ import org.booklore.model.enums.AuditAction;
 import org.booklore.service.audit.AuditService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Executor;
 
 @Slf4j
@@ -94,11 +97,19 @@ public class SendEmailV2Service {
     private EmailProviderV2Entity getDefaultEmailProvider() {
         BookLoreUser user = authenticationService.getAuthenticatedUser();
 
-        Long defaultProviderId = preferenceRepository.findByUserId(user.getId())
-                .map(UserEmailProviderPreferenceEntity::getDefaultProviderId)
-                .orElseThrow(ApiError.DEFAULT_EMAIL_PROVIDER_NOT_FOUND::createException);
+        Optional<Long> defaultProviderId = preferenceRepository.findByUserId(user.getId())
+                .map(UserEmailProviderPreferenceEntity::getDefaultProviderId);
 
-        return emailProviderRepository.findAccessibleProvider(defaultProviderId, user.getId())
+        if (defaultProviderId.isEmpty()) {
+            List<EmailProviderV2Entity> accessibleProviders = new ArrayList<>(emailProviderRepository.findAllByUserId(user.getId()));
+            accessibleProviders.addAll(emailProviderRepository.findAllSharedByOtherAdmins(user.getId()));
+            if (accessibleProviders.size() == 1) {
+                return accessibleProviders.getFirst();
+            }
+            throw ApiError.DEFAULT_EMAIL_PROVIDER_NOT_FOUND.createException();
+        }
+
+        return emailProviderRepository.findAccessibleProvider(defaultProviderId.get(), user.getId())
                 .orElseThrow(ApiError.DEFAULT_EMAIL_PROVIDER_NOT_FOUND::createException);
     }
 }
