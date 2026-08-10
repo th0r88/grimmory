@@ -170,6 +170,67 @@ class SendEmailV2ServiceTest {
     }
 
     @Test
+    void emailBookQuick_resolvesSoleAccessibleProvider_whenNoPreferenceRow() {
+        when(authenticationService.getAuthenticatedUser()).thenReturn(user);
+        when(bookRepository.findByIdWithBookFiles(10L)).thenReturn(Optional.of(book));
+        when(preferenceRepository.findByUserId(1L)).thenReturn(Optional.empty());
+        when(emailProviderRepository.findAllByUserId(1L)).thenReturn(List.of(emailProvider));
+        when(emailProviderRepository.findAllSharedByOtherAdmins(1L)).thenReturn(List.of());
+        when(emailRecipientRepository.findDefaultEmailRecipientByUserId(1L)).thenReturn(Optional.of(emailRecipient));
+
+        doAnswer(invocation -> {
+            Runnable task = invocation.getArgument(0);
+            task.run();
+            return null;
+        }).when(taskExecutor).execute(any(Runnable.class));
+
+        try (MockedStatic<FileUtils> fileUtilsMock = mockStatic(FileUtils.class)) {
+            fileUtilsMock.when(() -> FileUtils.getBookFullPath(book, bookFile)).thenReturn(Path.of("/library/books/test-book.epub"));
+
+            sendEmailV2Service.emailBookQuick(10L);
+
+            verify(taskExecutor).execute(any(Runnable.class));
+            verify(notificationService, atLeastOnce()).sendMessage(any(), any());
+        }
+    }
+
+    @Test
+    void emailBookQuick_defaultProviderNotFound_multipleAccessibleProviders() {
+        EmailProviderV2Entity otherProvider = EmailProviderV2Entity.builder()
+                .id(101L)
+                .userId(2L)
+                .shared(true)
+                .name("Shared Provider")
+                .host("smtp.other.com")
+                .port(587)
+                .username("other@test.com")
+                .password("password")
+                .auth(true)
+                .startTls(true)
+                .build();
+
+        when(authenticationService.getAuthenticatedUser()).thenReturn(user);
+        when(bookRepository.findByIdWithBookFiles(10L)).thenReturn(Optional.of(book));
+        when(preferenceRepository.findByUserId(1L)).thenReturn(Optional.empty());
+        when(emailProviderRepository.findAllByUserId(1L)).thenReturn(List.of(emailProvider));
+        when(emailProviderRepository.findAllSharedByOtherAdmins(1L)).thenReturn(List.of(otherProvider));
+
+        assertThrows(APIException.class, () -> sendEmailV2Service.emailBookQuick(10L));
+    }
+
+    @Test
+    void emailBookQuick_defaultProviderNotFound_staleProviderPreference_soleOtherProviderAccessible() {
+        when(authenticationService.getAuthenticatedUser()).thenReturn(user);
+        when(bookRepository.findByIdWithBookFiles(10L)).thenReturn(Optional.of(book));
+        when(preferenceRepository.findByUserId(1L)).thenReturn(Optional.of(preference));
+        when(emailProviderRepository.findAccessibleProvider(100L, 1L)).thenReturn(Optional.empty());
+        lenient().when(emailProviderRepository.findAllByUserId(1L)).thenReturn(List.of(emailProvider));
+        lenient().when(emailProviderRepository.findAllSharedByOtherAdmins(1L)).thenReturn(List.of());
+
+        assertThrows(APIException.class, () -> sendEmailV2Service.emailBookQuick(10L));
+    }
+
+    @Test
     void emailBookQuick_defaultRecipientNotFound() {
         when(authenticationService.getAuthenticatedUser()).thenReturn(user);
         when(bookRepository.findByIdWithBookFiles(10L)).thenReturn(Optional.of(book));
