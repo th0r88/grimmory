@@ -37,7 +37,11 @@ public class EmailAttachmentFilenameSanitizer {
         }
 
         int lastDot = fileName.lastIndexOf('.');
-        boolean hasExtension = lastDot > 0 && lastDot < fileName.length() - 1;
+        // lastDot == 0 (a leading-dot name such as ".epub") still counts as having an
+        // extension: the base is empty rather than the dot being treated as part of the
+        // base name, so the empty-base fallback below kicks in and yields "book.epub"
+        // instead of passing ".epub" straight through.
+        boolean hasExtension = lastDot >= 0 && lastDot < fileName.length() - 1;
 
         String base = hasExtension ? fileName.substring(0, lastDot) : fileName;
         String extension = hasExtension ? fileName.substring(lastDot) : "";

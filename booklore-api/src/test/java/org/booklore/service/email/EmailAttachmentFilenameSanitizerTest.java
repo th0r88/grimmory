@@ -95,4 +95,14 @@ class EmailAttachmentFilenameSanitizerTest {
 
         assertThat(result).isEqualTo("Book title.epub");
     }
+
+    @Test
+    void sanitize_prefixesFallbackNameForLeadingDotDotfile() {
+        // ".epub" has lastIndexOf('.') == 0, so it is not "an extension after a non-empty
+        // base" — the whole string is an empty base with a preserved extension, and the
+        // fallback base name should be prefixed rather than passing ".epub" straight through.
+        String result = EmailAttachmentFilenameSanitizer.sanitize(".epub");
+
+        assertThat(result).isEqualTo("book.epub");
+    }
 }
