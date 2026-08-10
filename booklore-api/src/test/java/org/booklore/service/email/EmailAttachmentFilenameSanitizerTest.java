@@ -77,4 +77,22 @@ class EmailAttachmentFilenameSanitizerTest {
 
         assertThat(result).isEqualTo("圖書 1.epub");
     }
+
+    @Test
+    void sanitize_stripsUnicodeRightToLeftOverride() {
+        // U+202E RIGHT-TO-LEFT OVERRIDE is a real filename-spoofing vector (e.g. renaming
+        // "evil.exe" to display as "evilcod.epub" by reversing the tail). \p{Cntrl} is
+        // ASCII-only and does not catch it.
+        String result = EmailAttachmentFilenameSanitizer.sanitize("Book‮gpj.exe.epub");
+
+        assertThat(result).isEqualTo("Book gpj.exe.epub");
+    }
+
+    @Test
+    void sanitize_stripsZeroWidthCharacters() {
+        // U+200B ZERO WIDTH SPACE is invisible in most renderers but not caught by \p{Cntrl}.
+        String result = EmailAttachmentFilenameSanitizer.sanitize("Book​title.epub");
+
+        assertThat(result).isEqualTo("Book title.epub");
+    }
 }

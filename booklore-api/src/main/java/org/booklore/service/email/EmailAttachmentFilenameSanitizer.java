@@ -20,8 +20,15 @@ public class EmailAttachmentFilenameSanitizer {
     // Characters known (or strongly suspected, per the Send-to-Kindle failure this fixes) to
     // confuse downstream mail/URL handling: '#' is a URL fragment delimiter (the root cause here),
     // '%%' triggers percent-decoding, '&' '=' '?' '+' are URL query syntax, the remainder are
-    // filesystem-reserved characters on common platforms plus raw control characters.
-    private static final Pattern RISKY_CHARS = Pattern.compile("[#%&+=?\\\\/:*\"<>|{}]|\\p{Cntrl}");
+    // filesystem-reserved characters on common platforms plus control/format characters.
+    //
+    // \p{Cc} (control) + \p{Cf} (format) catch Unicode control/format code points beyond the
+    // ASCII-only \p{Cntrl} — notably U+202E RIGHT-TO-LEFT OVERRIDE, a real filename-spoofing
+    // vector, and zero-width characters. Deliberately not the broader \p{C}: that also matches
+    // surrogates, private-use, and unassigned code points, and stripping unassigned ones would
+    // mangle filenames using scripts newer than this JVM's Unicode tables. Ordinary accented and
+    // CJK characters are outside \p{Cc}/\p{Cf} and are left untouched.
+    private static final Pattern RISKY_CHARS = Pattern.compile("[#%&+=?\\\\/:*\"<>|{}]|[\\p{Cc}\\p{Cf}]");
     private static final Pattern WHITESPACE_RUN = Pattern.compile("\\s+");
 
     public String sanitize(String fileName) {
