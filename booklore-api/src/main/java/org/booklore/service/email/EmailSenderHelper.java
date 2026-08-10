@@ -7,7 +7,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.booklore.model.entity.BookEntity;
 import org.booklore.model.entity.BookFileEntity;
 import org.booklore.model.entity.EmailProviderV2Entity;
+import org.booklore.model.enums.BookFileExtension;
 import org.booklore.util.FileUtils;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
@@ -24,14 +26,20 @@ public class EmailSenderHelper {
         JavaMailSenderImpl dynamicMailSender = setupMailSender(emailProvider);
         MimeMessage message = dynamicMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
+        populateMessage(helper, emailProvider, recipientEmail, book, bookFileEntity);
+        dynamicMailSender.send(message);
+        log.info("Book sent successfully to {}", recipientEmail);
+    }
+
+    void populateMessage(MimeMessageHelper helper, EmailProviderV2Entity emailProvider, String recipientEmail, BookEntity book, BookFileEntity bookFileEntity) throws MessagingException {
         helper.setFrom(StringUtils.firstNonEmpty(emailProvider.getFromAddress(), emailProvider.getUsername()));
         helper.setTo(recipientEmail);
         helper.setSubject("Your Book from Booklore: " + book.getMetadata().getTitle());
         helper.setText(generateEmailBody(book.getMetadata().getTitle()));
         File bookFile = FileUtils.getBookFullPath(book, bookFileEntity).toFile();
-        helper.addAttachment(bookFile.getName(), bookFile);
-        dynamicMailSender.send(message);
-        log.info("Book sent successfully to {}", recipientEmail);
+        String attachmentFileName = EmailAttachmentFilenameSanitizer.sanitize(bookFile.getName());
+        String contentType = BookFileExtension.contentTypeFor(bookFile.getName());
+        helper.addAttachment(attachmentFileName, new FileSystemResource(bookFile), contentType);
     }
 
     public JavaMailSenderImpl setupMailSender(EmailProviderV2Entity emailProvider) {
