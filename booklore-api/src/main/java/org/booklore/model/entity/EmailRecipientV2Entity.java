@@ -9,7 +9,8 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "email_recipient_v2")
+@Table(name = "email_recipient_v2",
+       uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "email"}))
 public class EmailRecipientV2Entity {
 
     @Id
@@ -19,7 +20,7 @@ public class EmailRecipientV2Entity {
     @Column(name = "user_id", nullable = false)
     private Long userId;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(name = "email", nullable = false)
     private String email;
 
     @Column(name = "name", nullable = false)
