@@ -23,22 +23,47 @@
     </div>
 
     <div class="section-body">
+      @if (isAdmin()) {
+        <div class="owner-filter">
+          <label for="ownerFilter" class="field-label">
+            <i class="pi pi-filter"></i>
+            {{ t('ownerFilter') }}
+          </label>
+          <p-select
+            inputId="ownerFilter"
+            [options]="owners"
+            optionLabel="ownerUsername"
+            optionValue="userId"
+            [(ngModel)]="selectedOwnerId"
+            [placeholder]="t('ownerFilterAll')"
+            [showClear]="true"
+            (onChange)="onOwnerFilterChange()"
+            (onClear)="onOwnerFilterChange()"
+            appendTo="body">
+          </p-select>
+        </div>
+      }
+
       @if (recipientEmails.length === 0) {
         <div class="empty-state">
           <i class="pi pi-users"></i>
-          <p class="empty-title">{{ t('emptyTitle') }}</p>
-          <p class="empty-subtitle">{{ t('emptySubtitle') }}</p>
+          @if (selectedOwnerId !== null) {
+            <p class="empty-title">{{ t('filteredEmptyTitle') }}</p>
+          } @else {
+            <p class="empty-title">{{ t('emptyTitle') }}</p>
+            <p class="empty-subtitle">{{ t('emptySubtitle') }}</p>
+          }
         </div>
       } @else {
         <div class="recipients-list">
           @for (recipient of recipientEmails; track recipient.id) {
-            <div class="recipient-item" [class.is-default]="recipient.id === defaultRecipientId">
+            <div class="recipient-item" [class.is-default]="recipient.id === defaultRecipientByOwner[recipient.userId]">
               <div class="recipient-content">
                 <div class="recipient-select">
                   <p-radioButton
-                    name="defaultRecipient"
+                    [name]="'defaultRecipient-' + recipient.userId"
                     [value]="recipient.id"
-                    [(ngModel)]="defaultRecipientId"
+                    [(ngModel)]="defaultRecipientByOwner[recipient.userId]"
                     (onClick)="setDefaultRecipient(recipient)">
                   </p-radioButton>
                 </div>
@@ -66,8 +91,11 @@
                       <div class="recipient-email">
                         <i class="pi pi-envelope"></i>
                         <span>{{ recipient.email }}</span>
-                        @if (recipient.id === defaultRecipientId) {
+                        @if (recipient.id === defaultRecipientByOwner[recipient.userId]) {
                           <span class="default-badge">{{ t('default') }}</span>
+                        }
+                        @if (isAdmin() && recipient.ownerUsername) {
+                          <span class="owner-badge">{{ t('owner') }}: {{ recipient.ownerUsername }}</span>
                         }
                       </div>
                       @if (recipient.name) {

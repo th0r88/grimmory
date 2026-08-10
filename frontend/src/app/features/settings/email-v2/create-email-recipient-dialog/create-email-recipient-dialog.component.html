@@ -74,6 +74,28 @@
         }
       </div>
 
+      @if (isAdmin) {
+        <div class="gradient-divider"></div>
+
+        <div class="form-group highlight-group">
+          <label for="assignTo" class="form-label">
+            <i class="pi pi-user label-icon"></i>
+            {{ t('assignTo') }}
+          </label>
+          <p-select
+            inputId="assignTo"
+            [options]="users"
+            optionLabel="username"
+            optionValue="id"
+            formControlName="userId"
+            [placeholder]="t('assignToPlaceholder')"
+            [loading]="usersLoading"
+            appendTo="body"
+            class="input-full">
+          </p-select>
+        </div>
+      }
+
       <div class="gradient-divider"></div>
 
       <div class="form-group highlight-group checkbox-group">

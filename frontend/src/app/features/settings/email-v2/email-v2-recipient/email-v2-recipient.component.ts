@@ -1,15 +1,28 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, computed, inject, OnInit} from '@angular/core';
 import {Button} from 'primeng/button';
 import {MessageService} from 'primeng/api';
 import {RadioButton} from 'primeng/radiobutton';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TableModule} from 'primeng/table';
 import {Tooltip} from 'primeng/tooltip';
+import {Select} from 'primeng/select';
 import {DynamicDialogRef} from 'primeng/dynamicdialog';
 import {EmailV2RecipientService} from './email-v2-recipient.service';
 import {EmailRecipient} from '../email-recipient.model';
 import {DialogLauncherService} from '../../../../shared/services/dialog-launcher.service';
+import {UserService} from '../../user-management/user.service';
 import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/transloco';
+
+/** Sentinel owner id for a recipient the backend did not attribute to a user (should not occur
+ *  in practice, but keeps the per-owner radio keying from collapsing `undefined` into one group). */
+const UNASSIGNED_OWNER_ID = -1;
+
+type OwnedEmailRecipient = EmailRecipient & { userId: number };
+
+interface OwnerOption {
+  userId: number;
+  ownerUsername: string;
+}
 
 @Component({
   selector: 'app-email-v2-recipient',
@@ -20,6 +33,7 @@ import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/tran
     TableModule,
     Tooltip,
     FormsModule,
+    Select,
     TranslocoDirective,
     TranslocoPipe
   ],
@@ -27,30 +41,57 @@ import {TranslocoDirective, TranslocoPipe, TranslocoService} from '@jsverse/tran
   styleUrl: './email-v2-recipient.component.scss'
 })
 export class EmailV2RecipientComponent implements OnInit {
-  recipientEmails: EmailRecipient[] = [];
+  recipientEmails: OwnedEmailRecipient[] = [];
   editingRecipientIds: number[] = [];
   ref: DynamicDialogRef | undefined | null;
+  owners: OwnerOption[] = [];
+  selectedOwnerId: number | null = null;
+  defaultRecipientByOwner: Record<number, number | null> = {};
+
   private dialogLauncherService = inject(DialogLauncherService);
   private emailRecipientService = inject(EmailV2RecipientService);
+  private userService = inject(UserService);
   private messageService = inject(MessageService);
   private t = inject(TranslocoService);
-  defaultRecipientId: unknown;
+
+  readonly isAdmin = computed(() => this.userService.currentUser()?.permissions.admin ?? false);
 
   ngOnInit(): void {
     this.loadRecipientEmails();
   }
 
   loadRecipientEmails(): void {
-    this.emailRecipientService.getRecipients().subscribe({
+    const isAdmin = this.isAdmin();
+    const request = !isAdmin
+      ? this.emailRecipientService.getRecipients()
+      : this.selectedOwnerId !== null
+        ? this.emailRecipientService.getRecipients({userId: this.selectedOwnerId})
+        : this.emailRecipientService.getRecipients({scopeAll: true});
+    const populateOwners = isAdmin && this.selectedOwnerId === null;
+
+    request.subscribe({
       next: (recipients: EmailRecipient[]) => {
         this.recipientEmails = recipients.map((recipient) => ({
           ...recipient,
+          userId: recipient.userId ?? UNASSIGNED_OWNER_ID,
           isEditing: false,
         }));
-        const defaultRecipient = recipients.find((recipient) => recipient.defaultRecipient);
-        this.defaultRecipientId = defaultRecipient ? defaultRecipient.id : null;
+        this.rebuildDefaultsByOwner();
+        if (populateOwners) {
+          this.rebuildOwnerOptions();
+        }
       },
-      error: () => {
+      error: (err: {status?: number}) => {
+        if (isAdmin && this.selectedOwnerId !== null && err?.status === 400) {
+          this.selectedOwnerId = null;
+          this.messageService.add({
+            severity: 'error',
+            summary: this.t.translate('common.error'),
+            detail: this.t.translate('settingsEmail.recipient.ownerFilterError'),
+          });
+          this.loadRecipientEmails();
+          return;
+        }
         this.messageService.add({
           severity: 'error',
           summary: this.t.translate('common.error'),
@@ -58,6 +99,34 @@ export class EmailV2RecipientComponent implements OnInit {
         });
       },
     });
+  }
+
+  onOwnerFilterChange(): void {
+    this.loadRecipientEmails();
+  }
+
+  private rebuildOwnerOptions(): void {
+    const seen = new Map<number, string>();
+    for (const recipient of this.recipientEmails) {
+      if (!seen.has(recipient.userId)) {
+        seen.set(recipient.userId, recipient.ownerUsername ?? '');
+      }
+    }
+    this.owners = Array.from(seen.entries())
+      .map(([userId, ownerUsername]) => ({userId, ownerUsername}))
+      .sort((a, b) => a.userId - b.userId);
+  }
+
+  private rebuildDefaultsByOwner(): void {
+    const defaults: Record<number, number | null> = {};
+    for (const recipient of this.recipientEmails) {
+      if (recipient.defaultRecipient) {
+        defaults[recipient.userId] = recipient.id;
+      } else if (!(recipient.userId in defaults)) {
+        defaults[recipient.userId] = null;
+      }
+    }
+    this.defaultRecipientByOwner = defaults;
   }
 
   toggleEditRecipient(recipient: EmailRecipient): void {
@@ -121,9 +190,9 @@ export class EmailV2RecipientComponent implements OnInit {
     });
   }
 
-  setDefaultRecipient(recipient: EmailRecipient) {
+  setDefaultRecipient(recipient: OwnedEmailRecipient) {
     this.emailRecipientService.setDefaultRecipient(recipient.id).subscribe(() => {
-      this.defaultRecipientId = recipient.id;
+      this.defaultRecipientByOwner[recipient.userId] = recipient.id;
       this.messageService.add({
         severity: 'success',
         summary: this.t.translate('settingsEmail.recipient.defaultSetSummary'),

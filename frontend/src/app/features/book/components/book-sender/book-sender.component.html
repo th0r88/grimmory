@@ -35,16 +35,26 @@
 
       <div class="form-field">
         <label class="field-label" for="book-sender-recipient">{{ t('recipient') }}</label>
-        <p-select
-          inputId="book-sender-recipient"
-          [options]="emailRecipients"
-          optionLabel="label"
-          [placeholder]="t('selectRecipient')"
-          [(ngModel)]="selectedRecipient"
-          [disabled]="!selectedProvider"
-          appendTo="body"
-          class="full-width">
-        </p-select>
+        @if (recipientsLoaded && emailRecipients.length === 0) {
+          <div class="no-recipients">
+            <i class="pi pi-exclamation-triangle"></i>
+            <div class="no-recipients-text">
+              <p class="no-recipients-title">{{ t('noRecipientsTitle') }}</p>
+              <p class="no-recipients-body">{{ t('noRecipientsBody') }}</p>
+            </div>
+          </div>
+        } @else {
+          <p-select
+            inputId="book-sender-recipient"
+            [options]="emailRecipients"
+            optionLabel="label"
+            [placeholder]="t('selectRecipient')"
+            [(ngModel)]="selectedRecipient"
+            [disabled]="!selectedProvider"
+            appendTo="body"
+            class="full-width">
+          </p-select>
+        }
       </div>
 
       @if (emailableFiles.length > 0) {
