@@ -80,7 +80,7 @@ public class EmailRecipientV2Service {
         EmailRecipientV2Entity emailRecipientToDelete = repository.findByIdAndUserId(id, user.getId()).orElseThrow(() -> ApiError.EMAIL_RECIPIENT_NOT_FOUND.createException(id));
         boolean isDefaultRecipient = emailRecipientToDelete.isDefaultRecipient();
         if (isDefaultRecipient) {
-            List<EmailRecipientV2Entity> allRecipients = repository.findAll();
+            List<EmailRecipientV2Entity> allRecipients = repository.findAllByUserId(user.getId());
             if (allRecipients.size() > 1) {
                 allRecipients.remove(emailRecipientToDelete);
                 int randomIndex = ThreadLocalRandom.current().nextInt(allRecipients.size());
