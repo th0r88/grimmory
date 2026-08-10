@@ -37,8 +37,9 @@ public class EmailSenderHelper {
         helper.setSubject("Your Book from Booklore: " + book.getMetadata().getTitle());
         helper.setText(generateEmailBody(book.getMetadata().getTitle()));
         File bookFile = FileUtils.getBookFullPath(book, bookFileEntity).toFile();
+        String attachmentFileName = EmailAttachmentFilenameSanitizer.sanitize(bookFile.getName());
         String contentType = BookFileExtension.contentTypeFor(bookFile.getName());
-        helper.addAttachment(bookFile.getName(), new FileSystemResource(bookFile), contentType);
+        helper.addAttachment(attachmentFileName, new FileSystemResource(bookFile), contentType);
     }
 
     public JavaMailSenderImpl setupMailSender(EmailProviderV2Entity emailProvider) {

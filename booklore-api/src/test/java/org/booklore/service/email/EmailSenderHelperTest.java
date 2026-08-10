@@ -59,6 +59,38 @@ class EmailSenderHelperTest {
     }
 
     @Test
+    void populateMessage_sanitizesHashFromAttachmentFilename_withoutTouchingContentType(@TempDir Path tempDir) throws Exception {
+        Path bookPath = tempDir.resolve("The Goal (Off-Campus #4) - Elle Kennedy (2016).epub");
+        Files.writeString(bookPath, "fake epub bytes for MIME header assertions");
+
+        BookEntity book = bookWithTitle("The Goal");
+        BookFileEntity bookFileEntity = new BookFileEntity();
+        EmailProviderV2Entity provider = emailProvider();
+
+        MimeMessage message = new MimeMessage(Session.getInstance(new Properties()));
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        try (MockedStatic<FileUtils> fileUtilsMock = mockStatic(FileUtils.class)) {
+            fileUtilsMock.when(() -> FileUtils.getBookFullPath(book, bookFileEntity)).thenReturn(bookPath);
+
+            emailSenderHelper.populateMessage(helper, provider, "reader@example.com", book, bookFileEntity);
+        }
+        message.saveChanges();
+
+        MimeMultipart multipart = (MimeMultipart) message.getContent();
+        Part attachmentPart = multipart.getBodyPart(1);
+
+        assertThat(attachmentPart.getFileName()).isEqualTo("The Goal (Off-Campus 4) - Elle Kennedy (2016).epub");
+        assertThat(attachmentPart.getContentType()).startsWith("application/epub+zip");
+
+        ByteArrayOutputStream rawMessage = new ByteArrayOutputStream();
+        message.writeTo(rawMessage);
+        String raw = rawMessage.toString(StandardCharsets.UTF_8);
+
+        assertThat(raw).doesNotContain("Off-Campus #4");
+    }
+
+    @Test
     void populateMessage_fallsBackToOctetStreamForUnknownExtension(@TempDir Path tempDir) throws Exception {
         Path filePath = tempDir.resolve("notes.txt");
         Files.writeString(filePath, "plain text content");
