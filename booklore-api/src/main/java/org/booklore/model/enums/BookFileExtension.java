@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
+import java.util.Locale;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -30,7 +31,7 @@ public enum BookFileExtension {
     private final String contentType;
 
     public static Optional<BookFileExtension> fromFileName(String fileName) {
-        String lower = fileName.toLowerCase();
+        String lower = fileName.toLowerCase(Locale.ROOT);
         return Arrays.stream(values())
                 .filter(e -> lower.endsWith("." + e.extension))
                 .findFirst();
