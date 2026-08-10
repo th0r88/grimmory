@@ -42,7 +42,7 @@ public class EmailRecipientV2Service {
     @Transactional
     public EmailRecipientV2 createEmailRecipient(CreateEmailRecipientRequest request) {
         BookLoreUser user = authService.getAuthenticatedUser();
-        boolean isFirstRecipient = repository.count() == 0;
+        boolean isFirstRecipient = repository.countByUserId(user.getId()) == 0;
         if (request.isDefaultRecipient() || isFirstRecipient) {
             repository.updateAllRecipientsToNonDefault(user.getId());
         }

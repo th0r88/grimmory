@@ -17,6 +17,8 @@ public interface EmailRecipientV2Repository extends JpaRepository<EmailRecipient
 
     List<EmailRecipientV2Entity> findAllByUserId(Long userId);
 
+    long countByUserId(Long userId);
+
     @Modifying
     @Transactional
     @Query("UPDATE EmailRecipientV2Entity e SET e.defaultRecipient = false WHERE e.defaultRecipient = true AND e.userId = :userId")
